@@ -21,4 +21,13 @@ public class ResultServiceTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("입력한 날짜가 0이상의 정수가 아니면 예외가 발생할 것이다.")
+    @ValueSource(strings = {"a", "1.2", "-1"})
+    @ParameterizedTest
+    void createDateByInvalidInput(String userInput) {
+        ResultService resultService = new ResultService();
+        assertThatThrownBy(() -> resultService.setDate(userInput))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
 }
