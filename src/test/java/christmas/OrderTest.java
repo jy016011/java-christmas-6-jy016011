@@ -60,4 +60,13 @@ public class OrderTest {
         Order order = new Order(dishNames, dishCounts);
         assertThat(order.getTotalPrice()).isEqualTo(80000);
     }
+
+    @DisplayName("초코케이크 2개를 시키면 주문 내용을 초코케이크 : 2개와 같이 저장할 것이다.")
+    @Test
+    void checkOrderDetails() {
+        List<String> dishNames = new ArrayList<>(List.of("초코케이크"));
+        List<Integer> dishCounts = new ArrayList<>(List.of(2));
+        Order order = new Order(dishNames, dishCounts);
+        assertThat(order.getOrderInMapFormat().get("초코케이크")).isEqualTo(2);
+    }
 }

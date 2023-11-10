@@ -4,13 +4,16 @@ import christmas.constants.Error;
 import christmas.constants.Menu;
 import christmas.utils.Validator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class Order {
     private final static int MIN_COUNT = 1;
     private final static int MAX_COUNT = 20;
     private final static int NOTHING = 0;
+    private final static int COUNT_ONE = MIN_COUNT;
     private final static Error ERROR_HEADER = Error.ERROR_HEADER;
 
     private final List<Dish> dishes = new ArrayList<>();
@@ -18,6 +21,23 @@ public class Order {
     public Order(List<String> dishNames, List<Integer> dishCounts) {
         validate(dishNames, dishCounts);
         setDishes(dishNames, dishCounts);
+    }
+
+    public HashMap<String, Integer> getOrderInMapFormat() {
+        HashMap<String, Integer> order = new HashMap<>();
+        for (Dish dish : dishes) {
+            String dishName = dish.getName();
+            changeFormat(order, dishName);
+        }
+        return order;
+    }
+
+    private void changeFormat(Map<String, Integer> order, String dishName) {
+        if (order.containsKey(dishName)) {
+            order.put(dishName, order.get(dishName) + COUNT_ONE);
+            return;
+        }
+        order.put(dishName, COUNT_ONE);
     }
 
     public int getTotalPrice() {
