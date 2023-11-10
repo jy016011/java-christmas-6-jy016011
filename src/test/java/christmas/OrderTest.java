@@ -3,6 +3,7 @@ package christmas;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import christmas.domain.Dish;
 import christmas.domain.Order;
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,24 @@ public class OrderTest {
         List<String> dishNames = new ArrayList<>(List.of("초코케이크"));
         List<Integer> dishCounts = new ArrayList<>(List.of(2));
         Order order = new Order(dishNames, dishCounts);
-        assertThat(order.getOrderInMapFormat().get("초코케이크")).isEqualTo(2);
+        assertThat(order.getDishes().get(new Dish("초코케이크"))).isEqualTo(2);
+    }
+
+    @DisplayName("할인 전 총 주문 금액이 만원 미만이면 이벤트 대상이 아닐 것이다.")
+    @Test
+    void orderUnderMinTotalPrice() {
+        List<String> dishNames = new ArrayList<>(List.of("제로콜라", "아이스크림"));
+        List<Integer> dishCounts = new ArrayList<>(List.of(1, 1));
+        Order order = new Order(dishNames, dishCounts);
+        assertThat(order.isEventTarget()).isEqualTo(false);
+    }
+
+    @DisplayName("할인 전 총 주문 금액이 12만원 미만이면, 증정 대상이 아닐 것이다.")
+    @Test
+    void orderUnderEventTotalPrice() {
+        List<String> dishNames = new ArrayList<>(List.of("티본스테이크"));
+        List<Integer> dishCounts = new ArrayList<>(List.of(2));
+        Order order = new Order(dishNames, dishCounts);
+        assertThat(order.canGetGift()).isEqualTo(false);
     }
 }

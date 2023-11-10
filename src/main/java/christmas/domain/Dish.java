@@ -7,6 +7,7 @@ import christmas.constants.dishes.Dessert;
 import christmas.constants.dishes.Drink;
 import christmas.constants.dishes.MainDish;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Dish {
     private static final Error ERROR_HEADER = Error.ERROR_HEADER;
@@ -36,6 +37,23 @@ public class Dish {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Dish dish = (Dish) o;
+        return this.name.equals(dish.name);
     }
 
     private void validate(String name) {

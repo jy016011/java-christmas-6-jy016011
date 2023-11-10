@@ -24,8 +24,8 @@ public class DishTest {
     @ValueSource(strings = {"양송이수프", "타파스", "시저샐러드"})
     @ParameterizedTest
     void createAppetizer(String input) {
-        Dish whiteMushroomSoup = new Dish(input);
-        assertThat(whiteMushroomSoup.getType()).isEqualTo("에피타이저");
+        Dish dish = new Dish(input);
+        assertThat(dish.getType()).isEqualTo("에피타이저");
     }
 
     @DisplayName("메인 메뉴들이면, 음식 유형이 메인일 것이다.")

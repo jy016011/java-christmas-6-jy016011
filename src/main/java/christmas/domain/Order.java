@@ -3,7 +3,7 @@ package christmas.domain;
 import christmas.constants.Error;
 import christmas.constants.Menu;
 import christmas.utils.Validator;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,22 +14,33 @@ public class Order {
     private final static int MAX_COUNT = 20;
     private final static int NOTHING = 0;
     private final static int COUNT_ONE = MIN_COUNT;
+    private final static int MIN_TOTAL = 10_000;
+    private final static int EVENT_TOTAL = 120_000;
     private final static Error ERROR_HEADER = Error.ERROR_HEADER;
 
-    private final List<Dish> dishes = new ArrayList<>();
+    private final HashMap<Dish, Integer> dishes = new HashMap<>();
+    private final int totalPrice;
 
     public Order(List<String> dishNames, List<Integer> dishCounts) {
         validate(dishNames, dishCounts);
         setDishes(dishNames, dishCounts);
+        totalPrice = setTotalPrice();
     }
 
-    public HashMap<String, Integer> getOrderInMapFormat() {
-        HashMap<String, Integer> order = new HashMap<>();
-        for (Dish dish : dishes) {
-            String dishName = dish.getName();
-            changeFormat(order, dishName);
-        }
-        return order;
+    public Map<Dish, Integer> getDishes() {
+        return Collections.unmodifiableMap(dishes);
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public boolean isEventTarget() {
+        return totalPrice > MIN_TOTAL;
+    }
+
+    public boolean canGetGift() {
+        return totalPrice >= EVENT_TOTAL;
     }
 
     private void changeFormat(Map<String, Integer> order, String dishName) {
@@ -38,14 +49,6 @@ public class Order {
             return;
         }
         order.put(dishName, COUNT_ONE);
-    }
-
-    public int getTotalPrice() {
-        int totalPrice = NOTHING;
-        for (Dish dish : dishes) {
-            totalPrice += dish.getPrice();
-        }
-        return totalPrice;
     }
 
     private void validate(List<String> dishNames, List<Integer> dishCounts) {
@@ -77,13 +80,15 @@ public class Order {
 
     private void setDishes(List<String> dishNames, List<Integer> dishCounts) {
         for (int i = NOTHING; i < dishNames.size(); i++) {
-            setDish(dishNames.get(i), dishCounts.get(i));
+            dishes.put(new Dish(dishNames.get(i)), dishCounts.get(i));
         }
     }
 
-    private void setDish(String dishName, int dishCount) {
-        for (int i = NOTHING; i < dishCount; i++) {
-            dishes.add(new Dish(dishName));
+    private int setTotalPrice() {
+        int totalPrice = NOTHING;
+        for (Dish dish : dishes.keySet()) {
+            totalPrice += dish.getPrice();
         }
+        return totalPrice;
     }
 }
