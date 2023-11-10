@@ -2,6 +2,10 @@ package christmas.domain;
 
 import christmas.constants.Error;
 import christmas.constants.Menu;
+import christmas.constants.dishes.Appetizer;
+import christmas.constants.dishes.Dessert;
+import christmas.constants.dishes.Drink;
+import christmas.constants.dishes.MainDish;
 import java.util.Arrays;
 
 public class Dish {
@@ -15,6 +19,19 @@ public class Dish {
 
     public String getType() {
         return Menu.getMenuBy(name).getType();
+    }
+
+    public int getPrice() {
+        if (getType().equals(Menu.APPETIZER.getType())) {
+            return Appetizer.getPriceBy(name);
+        }
+        if (getType().equals(Menu.MAIN_DISH.getType())) {
+            return MainDish.getPriceBy(name);
+        }
+        if (getType().equals(Menu.DESSERT.getType())) {
+            return Dessert.getPriceBy(name);
+        }
+        return Drink.getPriceBy(name);
     }
 
     public String getName() {

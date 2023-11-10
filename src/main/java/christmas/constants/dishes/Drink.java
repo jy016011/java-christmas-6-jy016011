@@ -12,25 +12,32 @@ public enum Drink {
     private final String priceToWon;
     private final String name;
 
-    Drink(int price, String priceToWon, String name){
+    Drink(int price, String priceToWon, String name) {
         this.price = price;
         this.priceToWon = priceToWon;
         this.name = name;
     }
 
-    public int getPrice(){
+    public static int getPriceBy(String name) {
+        return Arrays.stream(Drink.values())
+                .filter(appetizer -> appetizer.getName().equals(name))
+                .map(Drink::getPrice)
+                .findFirst().orElseThrow(IllegalArgumentException::new);
+    }
+
+    public int getPrice() {
         return price;
     }
 
-    public String getPriceToWon(){
+    public String getPriceToWon() {
         return priceToWon;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public static List<Drink> getDrinks(){
+    public static List<Drink> getDrinks() {
         return Arrays.stream(Drink.values()).toList();
     }
 }

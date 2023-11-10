@@ -30,6 +30,10 @@ public class ResultService {
         order = new Order(dishNames, dishCounts);
     }
 
+    public int getTotalPrice() {
+        return order.getTotalPrice();
+    }
+
     private void separateNameAndCount(List<String> orderInput, List<String> dishNames, List<Integer> dishCounts) {
         for (String eachOrder : orderInput) {
             List<String> dishes = StringChanger.toTrimmedStringList(eachOrder, SEPARATOR_DISH_AND_COUNT);

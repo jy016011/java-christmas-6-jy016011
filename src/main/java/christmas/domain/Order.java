@@ -20,6 +20,14 @@ public class Order {
         setDishes(dishNames, dishCounts);
     }
 
+    public int getTotalPrice() {
+        int totalPrice = NOTHING;
+        for (Dish dish : dishes) {
+            totalPrice += dish.getPrice();
+        }
+        return totalPrice;
+    }
+
     private void validate(List<String> dishNames, List<Integer> dishCounts) {
         validateNames(dishNames);
         validateCounts(dishCounts);

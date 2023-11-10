@@ -1,5 +1,6 @@
 package christmas;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.domain.Order;
@@ -49,5 +50,14 @@ public class OrderTest {
         assertThatThrownBy(() -> new Order(dishNames, dishCounts))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ERROR);
+    }
+
+    @DisplayName("티본스테이크와 샴페인을 하나씩 시키면 할인전 총금액은 80,000원일 것이다.")
+    @Test
+    void orderTBoneSteakAndChampagne() {
+        List<String> dishNames = new ArrayList<>(List.of("티본스테이크", "샴페인"));
+        List<Integer> dishCounts = new ArrayList<>(List.of(1, 1));
+        Order order = new Order(dishNames, dishCounts);
+        assertThat(order.getTotalPrice()).isEqualTo(80000);
     }
 }
