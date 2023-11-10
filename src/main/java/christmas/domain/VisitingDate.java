@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class VisitingDate {
     private static final int YEAR = 2023;
-    private static final int DECEMBER = 12;
+    private static final int MONTH = 12;
     private static final int FIRST_DAY = 1;
     private static final int LAST_DAY = 31;
     private static final int CHRISTMAS = 25;
@@ -22,7 +22,11 @@ public class VisitingDate {
 
     public VisitingDate(int day) {
         validate(day);
-        localDate = LocalDate.of(YEAR, DECEMBER, day);
+        localDate = LocalDate.of(YEAR, MONTH, day);
+    }
+
+    public int getDifferenceFromFirstDay() {
+        return localDate.getDayOfMonth() - FIRST_DAY;
     }
 
     public boolean isChristmasDDay() {

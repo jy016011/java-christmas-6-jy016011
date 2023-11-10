@@ -5,11 +5,11 @@ public enum Error {
 
     private final String errorMessage;
 
-    private Error(String errorMessage){
+    Error(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
-    public String getErrorMessage(){
+    public String getErrorMessage() {
         return errorMessage;
     }
 }

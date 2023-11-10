@@ -7,11 +7,7 @@ import java.util.stream.Collectors;
 public class StringChanger {
     private StringChanger() {
     }
-
-    public static String toTrimmedString(String input) {
-        return input.trim();
-    }
-
+    
     public static List<String> toTrimmedStringList(String input, String separator) {
         return Arrays.stream(
                         input.split(separator))

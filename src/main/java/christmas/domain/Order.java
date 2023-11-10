@@ -13,7 +13,6 @@ public class Order {
     private final static int MIN_COUNT = 1;
     private final static int MAX_COUNT = 20;
     private final static int NOTHING = 0;
-    private final static int COUNT_ONE = MIN_COUNT;
     private final static int MIN_TOTAL = 10_000;
     private final static int EVENT_TOTAL = 120_000;
     private final static Error ERROR_HEADER = Error.ERROR_HEADER;
@@ -27,7 +26,7 @@ public class Order {
         totalPrice = setTotalPrice();
     }
 
-    public Map<Dish, Integer> getDishes() {
+    public Map<Dish, Integer> getOrderedDishes() {
         return Collections.unmodifiableMap(dishes);
     }
 
@@ -43,12 +42,24 @@ public class Order {
         return totalPrice >= EVENT_TOTAL;
     }
 
-    private void changeFormat(Map<String, Integer> order, String dishName) {
-        if (order.containsKey(dishName)) {
-            order.put(dishName, order.get(dishName) + COUNT_ONE);
-            return;
+    public int getDessertCount() {
+        int count = NOTHING;
+        for (Dish dish : dishes.keySet()) {
+            if (dish.getType().equals("디저트")) {
+                count += dishes.get(dish);
+            }
         }
-        order.put(dishName, COUNT_ONE);
+        return count;
+    }
+
+    public int getMainDishCount() {
+        int count = NOTHING;
+        for (Dish dish : dishes.keySet()) {
+            if (dish.getType().equals("메인")) {
+                count += dishes.get(dish);
+            }
+        }
+        return count;
     }
 
     private void validate(List<String> dishNames, List<Integer> dishCounts) {
@@ -64,7 +75,7 @@ public class Order {
     private void validateNotAllDrinks(List<String> dishNames) {
         boolean isAllDrink = new HashSet<>(Menu.DRINK.getNames()).containsAll(dishNames);
         if (isAllDrink) {
-            throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage());
+            throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage() + " 읍료만 주문할 수 없습니다.");
         }
     }
 
@@ -87,7 +98,8 @@ public class Order {
     private int setTotalPrice() {
         int totalPrice = NOTHING;
         for (Dish dish : dishes.keySet()) {
-            totalPrice += dish.getPrice();
+            int dishCount = dishes.get(dish);
+            totalPrice += dish.getPrice() * dishCount;
         }
         return totalPrice;
     }

@@ -60,7 +60,7 @@ public class Dish {
         boolean isNotInMenu = Arrays.stream(Menu.values())
                 .noneMatch(menu -> menu.getNames().contains(name));
         if (isNotInMenu) {
-            throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage());
+            throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage() + " 메뉴판에 있는 메뉴만 주문하세요.");
         }
     }
 }

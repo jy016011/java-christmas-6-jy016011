@@ -29,4 +29,14 @@ public class VisitingDateTest {
         assertThat(visitingDate.isWeekday()).isEqualTo(true);
         assertThat(visitingDate.isWeekend()).isEqualTo(false);
     }
+
+    @DisplayName("12월 30일은 크리스마스 디데이가 아니고, 특별 할인이 없는 날이고, 주말이다.")
+    @Test
+    void createVisitingDateByTwentyThirdOfMonth() {
+        VisitingDate visitingDate = new VisitingDate(30);
+        assertThat(visitingDate.isChristmasDDay()).isEqualTo(false);
+        assertThat(visitingDate.isSpecialDay()).isEqualTo(false);
+        assertThat(visitingDate.isWeekday()).isEqualTo(false);
+        assertThat(visitingDate.isWeekend()).isEqualTo(true);
+    }
 }

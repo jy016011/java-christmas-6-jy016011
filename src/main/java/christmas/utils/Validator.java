@@ -28,13 +28,6 @@ public class Validator {
         }
     }
 
-    public static void validateSize(int size, int limit) {
-        boolean notMatchSize = size != limit;
-        if (notMatchSize) {
-            raiseIllegalArgumentException(ERROR_MESSAGE_HEADER + " " + limit + "개만큼 입력하세요.");
-        }
-    }
-
     public static void validateUniqueNames(List<String> names) {
         boolean isDuplicated = (
                 names.stream().distinct().count() != names.size()
