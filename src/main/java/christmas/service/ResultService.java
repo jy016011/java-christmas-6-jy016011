@@ -15,9 +15,11 @@ public class ResultService {
     private final static Error ERROR_HEADER = Error.ERROR_HEADER;
     private final static String DISH_SEPARATOR = ",";
     private final static String SEPARATOR_DISH_NAME_AND_COUNT = "-";
-    private final int DISH_NAME = 0;
-    private final int DISH_COUNT = 1;
-    private final int NOTHING = 0;
+    private final static int DISH_NAME = 0;
+    private final static int DISH_COUNT = 1;
+    private final static int VALID_DIFFERENCE = 1;
+    private final static int NOTHING = 0;
+
     private Order order;
     private VisitingDate visitingDate;
 
@@ -29,6 +31,7 @@ public class ResultService {
     public void setOrder(String userInput) {
         List<String> dishNames = new ArrayList<>();
         List<Integer> dishCounts = new ArrayList<>();
+        validateFormat(userInput);
         List<String> orderInput = StringChanger.toTrimmedStringList(userInput, DISH_SEPARATOR);
         separateNameAndCount(orderInput, dishNames, dishCounts);
         order = new Order(dishNames, dishCounts);
@@ -104,6 +107,17 @@ public class ResultService {
         return dicount;
     }
 
+    private void validateFormat(String userInput) {
+        int dishSeparatorCount = (int) userInput.chars()
+                .filter(c -> c == StringChanger.toChar(DISH_SEPARATOR)).count();
+        int dishNameAndCountSeparatorCount = (int) userInput.chars()
+                .filter(c -> c == StringChanger.toChar(SEPARATOR_DISH_NAME_AND_COUNT)).count();
+        Validator.validateIsEqual(
+                dishSeparatorCount,
+                dishNameAndCountSeparatorCount - VALID_DIFFERENCE
+        );
+    }
+
     private void separateNameAndCount(List<String> orderInput, List<String> dishNames, List<Integer> dishCounts) {
         for (String eachOrder : orderInput) {
             List<String> dishNameAndCount = StringChanger.toTrimmedStringList(eachOrder, SEPARATOR_DISH_NAME_AND_COUNT);
@@ -112,18 +126,17 @@ public class ResultService {
         }
     }
 
-    private int toNumber(String userInput) {
-        Validator.validateIsNumber(userInput);
-        return StringChanger.toInteger(userInput);
-    }
-
     private void validateCount(List<String> dishNameAndCount, List<Integer> dishCounts) {
         try {
             String dishCount = dishNameAndCount.get(DISH_COUNT);
-            Validator.validateIsNumber(dishCount);
-            dishCounts.add(StringChanger.toInteger(dishCount));
+            dishCounts.add(toNumber(dishCount));
         } catch (IndexOutOfBoundsException e) {
             throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage() + " 예시에 나온 형식대로 입력하세요.");
         }
+    }
+
+    private int toNumber(String userInput) {
+        Validator.validateIsNumber(userInput);
+        return StringChanger.toInteger(userInput);
     }
 }
