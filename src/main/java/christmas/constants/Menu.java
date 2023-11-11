@@ -34,7 +34,7 @@ public enum Menu {
         this.names = names;
     }
 
-    public static Menu getMenuBy(String name) {
+    public static Menu getBy(String name) {
         return Arrays.stream(Menu.values())
                 .filter(menu -> menu.getNames().contains(name))
                 .findFirst()

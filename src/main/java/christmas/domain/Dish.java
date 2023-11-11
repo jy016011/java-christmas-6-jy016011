@@ -19,7 +19,7 @@ public class Dish {
     }
 
     public String getType() {
-        return Menu.getMenuBy(name).getType();
+        return Menu.getBy(name).getType();
     }
 
     public int getPrice() {
