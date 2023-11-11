@@ -35,7 +35,7 @@ public class Order {
     }
 
     public boolean isEventTarget() {
-        return totalPrice > MIN_TOTAL;
+        return totalPrice >= MIN_TOTAL;
     }
 
     public boolean canGetGift() {
@@ -68,7 +68,7 @@ public class Order {
     }
 
     private void validateNames(List<String> dishNames) {
-        Validator.validateUniqueNames(dishNames);
+        Validator.validateIsUnique(dishNames);
         validateNotAllDrinks(dishNames);
     }
 
