@@ -59,7 +59,7 @@ public class OrderTest {
         List<String> dishNames = new ArrayList<>(List.of("티본스테이크", "샴페인"));
         List<Integer> dishCounts = new ArrayList<>(List.of(1, 1)); // 55,000원, 25,000원
         Order order = new Order(dishNames, dishCounts);
-        assertThat(order.getTotalPrice()).isEqualTo(80000);
+        assertThat(order.getTotalPrice()).isEqualTo(80_000);
     }
 
     @DisplayName("초코케이크 2개를 시키면 주문 내용을 초코케이크 : 2개와 같이 저장할 것이다.")
@@ -77,7 +77,18 @@ public class OrderTest {
         List<String> dishNames = new ArrayList<>(List.of("제로콜라", "아이스크림"));
         List<Integer> dishCounts = new ArrayList<>(List.of(1, 1)); // 8000원
         Order order = new Order(dishNames, dishCounts);
+        assertThat(order.getTotalPrice()).isEqualTo(8_000);
         assertThat(order.isEventTarget()).isEqualTo(false);
+    }
+
+    @DisplayName("할인 전 총 주문 금액이 만원 이상이면 이벤트 대상일 것이다.")
+    @Test
+    void orderMinTotalPrice() {
+        List<String> dishNames = new ArrayList<>(List.of("아이스크림"));
+        List<Integer> dishCounts = new ArrayList<>(List.of(2));
+        Order order = new Order(dishNames, dishCounts);
+        assertThat(order.getTotalPrice()).isEqualTo(10_000);
+        assertThat(order.isEventTarget()).isEqualTo(true);
     }
 
     @DisplayName("할인 전 총 주문 금액이 12만원 미만이면, 증정 대상이 아닐 것이다.")
@@ -86,6 +97,17 @@ public class OrderTest {
         List<String> dishNames = new ArrayList<>(List.of("티본스테이크"));
         List<Integer> dishCounts = new ArrayList<>(List.of(2)); // 11만원
         Order order = new Order(dishNames, dishCounts);
+        assertThat(order.getTotalPrice()).isEqualTo(110_000);
         assertThat(order.canGetGift()).isEqualTo(false);
+    }
+
+    @DisplayName("할인 전 총 주문 금액이 12만원 이상이면, 증정 대상일 것이다.")
+    @Test
+    void orderEventTotalPrice() {
+        List<String> dishNames = new ArrayList<>(List.of("티본스테이크", "아이스크림"));
+        List<Integer> dishCounts = new ArrayList<>(List.of(2, 2));
+        Order order = new Order(dishNames, dishCounts);
+        assertThat(order.getTotalPrice()).isEqualTo(120_000);
+        assertThat(order.canGetGift()).isEqualTo(true);
     }
 }
