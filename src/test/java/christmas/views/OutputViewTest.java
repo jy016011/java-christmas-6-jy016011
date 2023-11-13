@@ -2,6 +2,7 @@ package christmas.views;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.constants.Badge;
 import christmas.constants.Event;
 import christmas.domain.Dish;
 import java.io.ByteArrayOutputStream;
@@ -89,7 +90,6 @@ public class OutputViewTest {
         Map<String, Integer> benefitDetails = new LinkedHashMap<>();
         benefitDetails.put(Event.CHRISTMAS_D_DAY.getName(), 1_200);
         benefitDetails.put(Event.WEEKDAY.getName(), 4_046);
-        benefitDetails.put(Event.WEEKEND.getName(), 0);
         benefitDetails.put(Event.SPECIAL.getName(), 1_000);
         benefitDetails.put(Event.PRESENT.getName(), 25_000);
         OutputView.printBenefitsDetails(benefitDetails);
@@ -99,6 +99,16 @@ public class OutputViewTest {
                         "평일 할인: -4,046원" + LINE_SEPARATOR +
                         "특별 할인: -1,000원" + LINE_SEPARATOR +
                         "증정 이벤트: -25,000원"
+        );
+    }
+
+    @Test
+    void testPrintingBenefitsNone() {
+        Map<String, Integer> benefitDetails = new LinkedHashMap<>();
+        OutputView.printBenefitsDetails(benefitDetails);
+        assertThat(output()).isEqualTo(
+                "<혜택 내역>" + LINE_SEPARATOR +
+                        "없음"
         );
     }
 
@@ -116,5 +126,20 @@ public class OutputViewTest {
         int expectedPriceToPay = 135_754;
         OutputView.printExpectedPriceToPay(expectedPriceToPay);
         assertThat(output()).isEqualTo("<할인 후 예상 결제 금액>" + LINE_SEPARATOR + "135,754원");
+    }
+
+    @DisplayName("12월 이벤트 배지 출력")
+    @Test
+    void testPrintingSantaBadge() {
+        Badge badge = Badge.SANTA;
+        OutputView.printBadge(badge);
+        assertThat(output()).isEqualTo("<12월 이벤트 배지>" + LINE_SEPARATOR + "산타");
+    }
+
+    @Test
+    void testPrintingNoneBadge() {
+        Badge badge = Badge.NONE;
+        OutputView.printBadge(badge);
+        assertThat(output()).isEqualTo("<12월 이벤트 배지>" + LINE_SEPARATOR + "없음");
     }
 }

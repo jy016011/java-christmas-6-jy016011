@@ -1,11 +1,13 @@
 package christmas.views;
 
+import christmas.constants.Badge;
 import christmas.domain.Dish;
 import java.util.Map;
 
 public class OutputView {
     private static final int MONTH = 12;
     private static final int NOTHING = 0;
+    private static final String NONE = "없음";
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private OutputView() {
@@ -40,11 +42,12 @@ public class OutputView {
 
     public static void printBenefitsDetails(Map<String, Integer> benefitsDetails) {
         StringBuilder readableFormatOfBenefits = new StringBuilder(LINE_SEPARATOR + "<혜택 내역>" + LINE_SEPARATOR);
+        if (benefitsDetails.isEmpty()) {
+            System.out.println(readableFormatOfBenefits + NONE);
+            return;
+        }
         for (String event : benefitsDetails.keySet()) {
             int benefit = benefitsDetails.get(event);
-            if (benefit == NOTHING) {
-                continue;
-            }
             readableFormatOfBenefits.append(event).append(": ")
                     .append("-").append(String.format("%,d원", benefit)).append(LINE_SEPARATOR);
         }
@@ -61,5 +64,9 @@ public class OutputView {
         System.out.println(
                 LINE_SEPARATOR + "<할인 후 예상 결제 금액>" + LINE_SEPARATOR + String.format("%,d원", expectedPriceToPay)
         );
+    }
+
+    public static void printBadge(Badge badge) {
+        System.out.println(LINE_SEPARATOR + "<" + MONTH + "월 이벤트 배지>" + LINE_SEPARATOR + badge.getName());
     }
 }

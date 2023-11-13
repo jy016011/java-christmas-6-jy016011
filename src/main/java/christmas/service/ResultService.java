@@ -57,7 +57,11 @@ public class ResultService {
     public Map<String, Integer> getBenefitsDetails() {
         Map<String, Integer> benefitsDetails = new LinkedHashMap<>();
         for (Event event : Event.values()) {
-            benefitsDetails.put(event.getName(), getBenefit(event));
+            int benefit = getBenefit(event);
+            if (benefit == NOTHING) {
+                continue;
+            }
+            benefitsDetails.put(event.getName(), benefit);
         }
         return benefitsDetails;
     }
