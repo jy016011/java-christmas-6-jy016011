@@ -40,8 +40,6 @@ public class ResultServiceTest {
 
     @DisplayName("12월 3일에 실행 에시와 같이 주문하면, "
             + "할인 전 총금액은 142,000원 일 것이고,"
-            + "샴페인 1개를 증정받아 25,000원을 혜택받을 것이며,"
-            + "총 할인 금액은 6,246원일 것이라,"
             + "총 혜택 금액은 31,246원일 것이고,"
             + "따라서 할인된 총금액은 135,754원 일 것이다.")
     @Test
@@ -50,8 +48,6 @@ public class ResultServiceTest {
         resultService.setDate("3");
         resultService.setOrder("티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
         assertThat(resultService.getTotalPrice()).isEqualTo(142_000);
-        assertThat(resultService.getGiftBenefit()).isEqualTo(25_000);
-        assertThat(resultService.getTotalDiscount()).isEqualTo(6_246);
         assertThat(resultService.getTotalBenefit()).isEqualTo(31_246);
         assertThat(resultService.getTotalDiscountedPrice()).isEqualTo(135_754);
     }

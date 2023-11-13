@@ -6,7 +6,7 @@ import christmas.constants.Event;
 import christmas.domain.Dish;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,11 +55,11 @@ public class OutputViewTest {
     @DisplayName("주문 메뉴 출력")
     @Test
     void testPrintingOrderedMenu() {
-        Map<Dish, Integer> userOrderedMenu = new HashMap<>();
+        Map<Dish, Integer> userOrderedMenu = new LinkedHashMap<>();
         userOrderedMenu.put(new Dish("타파스"), 1);
         userOrderedMenu.put(new Dish("제로콜라"), 1);
         OutputView.printOrderedMenu(userOrderedMenu);
-        assertThat(output()).contains("<주문 메뉴>", "타파스 1개", "제로콜라 1개");
+        assertThat(output()).isEqualTo("<주문 메뉴>" + LINE_SEPARATOR + "타파스 1개" + LINE_SEPARATOR + "제로콜라 1개");
     }
 
     @DisplayName("할인 전 총주문 금액 출력")
@@ -81,6 +81,25 @@ public class OutputViewTest {
     void testPrintingPresentEventWithOutGift() {
         OutputView.printPresent(NONE);
         assertThat(output()).isEqualTo("<증정 메뉴>" + LINE_SEPARATOR + "없음");
+    }
+
+    @DisplayName("혜택 내역 출력")
+    @Test
+    void testPrintingBenefitsDetails() {
+        Map<String, Integer> benefitDetails = new LinkedHashMap<>();
+        benefitDetails.put(Event.CHRISTMAS_D_DAY.getName(), 1_200);
+        benefitDetails.put(Event.WEEKDAY.getName(), 4_046);
+        benefitDetails.put(Event.WEEKEND.getName(), 0);
+        benefitDetails.put(Event.SPECIAL.getName(), 1_000);
+        benefitDetails.put(Event.PRESENT.getName(), 25_000);
+        OutputView.printBenefitsDetails(benefitDetails);
+        assertThat(output()).isEqualTo(
+                "<혜택 내역>" + LINE_SEPARATOR +
+                        "크리스마스 디데이 할인: -1,200원" + LINE_SEPARATOR +
+                        "평일 할인: -4,046원" + LINE_SEPARATOR +
+                        "특별 할인: -1,000원" + LINE_SEPARATOR +
+                        "증정 이벤트: -25,000원"
+        );
     }
 
 }

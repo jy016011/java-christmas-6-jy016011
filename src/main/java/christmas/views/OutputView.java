@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class OutputView {
     private static final int MONTH = 12;
+    private static final int NOTHING = 0;
     private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private OutputView() {
@@ -35,5 +36,18 @@ public class OutputView {
 
     public static void printPresent(String gift) {
         System.out.println(LINE_SEPARATOR + "<증정 메뉴>" + LINE_SEPARATOR + gift);
+    }
+
+    public static void printBenefitsDetails(Map<String, Integer> benefitsDetails) {
+        StringBuilder readableFormatOfBenefits = new StringBuilder(LINE_SEPARATOR + "<혜택 내역>" + LINE_SEPARATOR);
+        for (String event : benefitsDetails.keySet()) {
+            int benefit = benefitsDetails.get(event);
+            if (benefit == NOTHING) {
+                continue;
+            }
+            readableFormatOfBenefits.append(event).append(": ")
+                    .append("-").append(String.format("%,d원", benefit)).append(LINE_SEPARATOR);
+        }
+        System.out.println(readableFormatOfBenefits);
     }
 }

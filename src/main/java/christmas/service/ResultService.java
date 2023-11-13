@@ -8,6 +8,7 @@ import christmas.domain.VisitingDate;
 import christmas.utils.StringChanger;
 import christmas.utils.Validator;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,31 @@ public class ResultService {
         return NONE;
     }
 
-    public int getChristmasDDayDiscount() {
+    public Map<String, Integer> getBenefitsDetails() {
+        Map<String, Integer> benefitsDetails = new LinkedHashMap<>();
+        for (Event event : Event.values()) {
+            benefitsDetails.put(event.getName(), getBenefit(event));
+        }
+        return benefitsDetails;
+    }
+
+    private int getBenefit(Event event) {
+        if (event == Event.CHRISTMAS_D_DAY) {
+            return getChristmasDDayDiscount();
+        }
+        if (event == Event.WEEKDAY) {
+            return getWeekdayDiscount();
+        }
+        if (event == Event.WEEKEND) {
+            return getWeekendDiscount();
+        }
+        if (event == Event.SPECIAL) {
+            return getSpecialDiscount();
+        }
+        return getGiftBenefit();
+    }
+
+    private int getChristmasDDayDiscount() {
         int discount = NOTHING;
         if (order.isEventTarget() && visitingDate.isChristmasDDay()) {
             int additionalCount = visitingDate.getDifferenceFromFirstDay();
@@ -63,7 +88,7 @@ public class ResultService {
         return discount;
     }
 
-    public int getWeekdayDiscount() {
+    private int getWeekdayDiscount() {
         int discount = NOTHING;
         if (order.isEventTarget() && visitingDate.isWeekday()) {
             int additionalCount = order.getDessertCount();
@@ -72,7 +97,7 @@ public class ResultService {
         return discount;
     }
 
-    public int getWeekendDiscount() {
+    private int getWeekendDiscount() {
         int discount = NOTHING;
         if (order.isEventTarget() && visitingDate.isWeekend()) {
             int additionalCount = order.getMainDishCount();
@@ -81,7 +106,7 @@ public class ResultService {
         return discount;
     }
 
-    public int getSpecialDiscount() {
+    private int getSpecialDiscount() {
         int dicount = NOTHING;
         if (order.isEventTarget() && visitingDate.isSpecialDay()) {
             dicount = Event.SPECIAL.getBaseDiscount();
@@ -89,7 +114,7 @@ public class ResultService {
         return dicount;
     }
 
-    public int getGiftBenefit() {
+    private int getGiftBenefit() {
         if (order.isEventTarget() && order.canGetGift()) {
             return Event.PRESENT.getBaseDiscount();
         }

@@ -6,6 +6,7 @@ import christmas.utils.Validator;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class Order {
     private final static int EVENT_TOTAL = 120_000;
     private final static Error ERROR_HEADER = Error.ERROR_HEADER;
 
-    private final HashMap<Dish, Integer> dishes = new HashMap<>();
+    private final HashMap<Dish, Integer> dishes = new LinkedHashMap<>();
     private final int totalPrice;
 
     public Order(List<String> dishNames, List<Integer> dishCounts) {
