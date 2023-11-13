@@ -2,6 +2,7 @@ package christmas.views;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.constants.Event;
 import christmas.domain.Dish;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 public class OutputViewTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
+    private static final String NONE = "없음";
 
     private PrintStream standardOut;
     private ByteArrayOutputStream captor;
@@ -67,4 +69,18 @@ public class OutputViewTest {
         OutputView.printBeforeDiscount(totalPrice);
         assertThat(output()).isEqualTo("<할인 전 총주문 금액>" + LINE_SEPARATOR + "8,500원");
     }
+
+    @DisplayName("증정 메뉴 출력")
+    @Test
+    void testPrintingPresentEventWithGift() {
+        OutputView.printPresent(Event.PRESENT.getGift());
+        assertThat(output()).isEqualTo("<증정 메뉴>" + LINE_SEPARATOR + "샴페인 1개");
+    }
+
+    @Test
+    void testPrintingPresentEventWithOutGift() {
+        OutputView.printPresent(NONE);
+        assertThat(output()).isEqualTo("<증정 메뉴>" + LINE_SEPARATOR + "없음");
+    }
+
 }

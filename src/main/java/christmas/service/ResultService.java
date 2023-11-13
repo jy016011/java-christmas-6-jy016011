@@ -15,6 +15,7 @@ public class ResultService {
     private final static Error ERROR_HEADER = Error.ERROR_HEADER;
     private final static String DISH_SEPARATOR = ",";
     private final static String SEPARATOR_DISH_NAME_AND_COUNT = "-";
+    private final static String NONE = "없음";
     private final static int DISH_NAME = 0;
     private final static int DISH_COUNT = 1;
     private final static int VALID_DIFFERENCE = 1;
@@ -45,30 +46,11 @@ public class ResultService {
         return order.getTotalPrice();
     }
 
-    public int getTotalDiscountedPrice() {
-        int totalPriceDiscounted = order.getTotalPrice();
-        totalPriceDiscounted -= getTotalDiscount();
-        return totalPriceDiscounted;
-    }
-
-    public int getTotalDiscount() {
-        int totalDiscount = NOTHING;
-        totalDiscount += getChristmasDDayDiscount();
-        totalDiscount += getWeekdayDiscount();
-        totalDiscount += getWeekendDiscount();
-        totalDiscount += getSpecialDiscount();
-        return totalDiscount;
-    }
-
-    public int getTotalBenefit() {
-        return getTotalDiscount() + getGiftBenefit();
-    }
-
-    public int getGiftBenefit() {
+    public String getGift() {
         if (order.isEventTarget() && order.canGetGift()) {
-            return Event.GIFT.getBaseDiscount();
+            return Event.PRESENT.getGift();
         }
-        return NOTHING;
+        return NONE;
     }
 
     public int getChristmasDDayDiscount() {
@@ -105,6 +87,32 @@ public class ResultService {
             dicount = Event.SPECIAL.getBaseDiscount();
         }
         return dicount;
+    }
+
+    public int getGiftBenefit() {
+        if (order.isEventTarget() && order.canGetGift()) {
+            return Event.PRESENT.getBaseDiscount();
+        }
+        return NOTHING;
+    }
+
+    public int getTotalDiscount() {
+        int totalDiscount = NOTHING;
+        totalDiscount += getChristmasDDayDiscount();
+        totalDiscount += getWeekdayDiscount();
+        totalDiscount += getWeekendDiscount();
+        totalDiscount += getSpecialDiscount();
+        return totalDiscount;
+    }
+
+    public int getTotalDiscountedPrice() {
+        int totalPriceDiscounted = order.getTotalPrice();
+        totalPriceDiscounted -= getTotalDiscount();
+        return totalPriceDiscounted;
+    }
+
+    public int getTotalBenefit() {
+        return getTotalDiscount() + getGiftBenefit();
     }
 
     private void validateFormat(String userInput) {

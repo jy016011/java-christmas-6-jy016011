@@ -32,4 +32,8 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + "<할인 전 총주문 금액>" + LINE_SEPARATOR
                 + String.format("%,d원", totalPriceBeforeDiscount));
     }
+
+    public static void printPresent(String gift) {
+        System.out.println(LINE_SEPARATOR + "<증정 메뉴>" + LINE_SEPARATOR + gift);
+    }
 }
