@@ -1,7 +1,6 @@
 package christmas.service;
 
 import christmas.constants.Badge;
-import christmas.constants.Error;
 import christmas.constants.Event;
 import christmas.domain.Dish;
 import christmas.domain.Order;
@@ -14,14 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultService {
-    private final static Error ERROR_HEADER = Error.ERROR_HEADER;
     private final static String DISH_SEPARATOR = ",";
-    private final static String SEPARATOR_DISH_NAME_AND_COUNT = "-";
+    private final static String DISH_NAME_AND_COUNT_SEPARATOR = "-";
     private final static String NONE = "없음";
+    private final static int NOTHING = 0;
     private final static int DISH_NAME = 0;
     private final static int DISH_COUNT = 1;
+    private final static int VALID_SIZE = 2;
     private final static int VALID_DIFFERENCE = 1;
-    private final static int NOTHING = 0;
 
     private Order order;
     private VisitingDate visitingDate;
@@ -44,7 +43,7 @@ public class ResultService {
         order = new Order(dishNames, dishCounts);
     }
 
-    public Map<Dish, Integer> getOrderedMenu() {
+    public Map<Dish, Integer> getUserOrder() {
         return order.getOrderedDishes();
     }
 
@@ -69,9 +68,7 @@ public class ResultService {
     }
 
     public int getTotalDiscountedPrice() {
-        int totalPriceDiscounted = order.getTotalPrice();
-        totalPriceDiscounted -= getTotalDiscount();
-        return totalPriceDiscounted;
+        return order.getTotalPrice() - getTotalDiscount();
     }
 
     public int getTotalBenefit() {
@@ -82,10 +79,9 @@ public class ResultService {
         Map<String, Integer> benefitsDetails = new LinkedHashMap<>();
         for (Event event : Event.values()) {
             int benefit = getBenefitBy(event);
-            if (benefit == NOTHING) {
-                continue;
+            if (benefit > NOTHING) {
+                benefitsDetails.put(event.getName(), benefit);
             }
-            benefitsDetails.put(event.getName(), benefit);
         }
         return benefitsDetails;
     }
@@ -157,7 +153,7 @@ public class ResultService {
         int dishSeparatorCount = (int) userInput.chars()
                 .filter(c -> c == StringChanger.toChar(DISH_SEPARATOR)).count();
         int dishNameAndCountSeparatorCount = (int) userInput.chars()
-                .filter(c -> c == StringChanger.toChar(SEPARATOR_DISH_NAME_AND_COUNT)).count();
+                .filter(c -> c == StringChanger.toChar(DISH_NAME_AND_COUNT_SEPARATOR)).count();
         Validator.validateIsEqual(
                 dishSeparatorCount,
                 dishNameAndCountSeparatorCount - VALID_DIFFERENCE
@@ -166,19 +162,15 @@ public class ResultService {
 
     private void separateNameAndCount(List<String> orderInput, List<String> dishNames, List<Integer> dishCounts) {
         for (String eachOrder : orderInput) {
-            List<String> dishNameAndCount = StringChanger.toTrimmedStringList(eachOrder, SEPARATOR_DISH_NAME_AND_COUNT);
+            List<String> dishNameAndCount = StringChanger.toTrimmedStringList(eachOrder, DISH_NAME_AND_COUNT_SEPARATOR);
+            validateIsSeparated(dishNameAndCount);
             dishNames.add(dishNameAndCount.get(DISH_NAME));
-            validateCount(dishNameAndCount, dishCounts);
+            dishCounts.add(toNumber(dishNameAndCount.get(DISH_COUNT)));
         }
     }
 
-    private void validateCount(List<String> dishNameAndCount, List<Integer> dishCounts) {
-        try {
-            String dishCount = dishNameAndCount.get(DISH_COUNT);
-            dishCounts.add(toNumber(dishCount));
-        } catch (IndexOutOfBoundsException e) {
-            throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage() + " 예시에 나온 형식대로 입력하세요.");
-        }
+    private void validateIsSeparated(List<String> dishNameAndCount) {
+        Validator.validateIsEqual(dishNameAndCount.size(), VALID_SIZE);
     }
 
     private int toNumber(String userInput) {
