@@ -2,6 +2,7 @@ package christmas.views;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import camp.nextstep.edu.missionutils.Console;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -25,6 +26,7 @@ public class InputViewTest {
     public void printOutput() {
         System.setOut(standardOut);
         captor.reset();
+        Console.close();
     }
 
     private String output() {
@@ -43,6 +45,16 @@ public class InputViewTest {
         command(userInput);
         String systemReceived = InputView.getVisitingDayInput();
         assertThat(output()).isEqualTo("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해주세요!)");
+        assertThat(systemReceived).isEqualTo(userInput);
+    }
+
+    @DisplayName("주문 입력 확인")
+    @Test
+    void testGettingOrderInput() {
+        String userInput = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
+        command(userInput);
+        String systemReceived = InputView.getOrderInput();
+        assertThat(output()).isEqualTo("주문하실 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         assertThat(systemReceived).isEqualTo(userInput);
     }
 }
