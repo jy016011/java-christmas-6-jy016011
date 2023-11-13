@@ -135,11 +135,11 @@ public class ResultService {
     }
 
     private int getSpecialDiscount() {
-        int dicount = NOTHING;
+        int discount = NOTHING;
         if (order.isEventTarget() && visitingDate.isSpecialDay()) {
-            dicount = Event.SPECIAL.getBaseDiscount();
+            discount = Event.SPECIAL.getBaseDiscount();
         }
-        return dicount;
+        return discount;
     }
 
     private int getGiftBenefit() {
