@@ -23,7 +23,7 @@ public class InputViewTest {
     }
 
     @AfterEach
-    public void printOutput() {
+    public void reset() {
         System.setOut(standardOut);
         captor.reset();
         Console.close();

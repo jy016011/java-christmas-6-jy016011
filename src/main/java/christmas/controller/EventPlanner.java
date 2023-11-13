@@ -2,11 +2,11 @@ package christmas.controller;
 
 import christmas.constants.Badge;
 import christmas.service.ResultService;
+import christmas.views.ErrorView;
 import christmas.views.InputView;
 import christmas.views.OutputView;
 
 public class EventPlanner {
-    private static final int NOTHING = 0;
     private ResultService resultService;
 
     public void init() {
@@ -31,7 +31,7 @@ public class EventPlanner {
                 resultService.setDate(visitingDay);
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("\n[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.\n");
+                ErrorView.printInvalidDayInput();
             }
         }
     }
@@ -43,32 +43,32 @@ public class EventPlanner {
                 resultService.setOrder(userOrder);
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println("\n[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.\n");
+                ErrorView.printInvalidOrderInput();
             }
         }
     }
 
     private void printResult() {
         printUserInput();
-        printBenefits();
+        printAllBenefits();
         printBadge();
     }
 
     private void printUserInput() {
-        OutputView.printPrefaceOfResultOf(resultService.getDate());
-        OutputView.printOrderedMenu(resultService.getOrderedMenu());
+        OutputView.printPrefaceOfResultWith(resultService.getDate());
+        OutputView.printEachOrderBy(resultService.getUserOrder());
         OutputView.printBeforeDiscount(resultService.getTotalPrice());
     }
 
-    private void printBenefits() {
+    private void printAllBenefits() {
         OutputView.printPresent(resultService.getGift());
-        OutputView.printBenefitsDetails(resultService.synthesizeAllBenefits());
-        OutputView.printTotalBenefits(resultService.getTotalBenefit());
-        OutputView.printExpectedPriceToPay(resultService.getTotalDiscountedPrice());
+        OutputView.printDetailsOf(resultService.synthesizeAllBenefits());
+        OutputView.printTheSumOf(resultService.getTotalBenefit());
+        OutputView.printExpected(resultService.getTotalDiscountedPrice());
     }
 
     private void printBadge() {
         Badge badge = resultService.getBadge();
-        OutputView.printBadge(badge);
+        OutputView.printLastMessageWith(badge);
     }
 }

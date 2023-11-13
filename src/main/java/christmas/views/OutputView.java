@@ -17,11 +17,11 @@ public class OutputView {
         System.out.println(LINE_SEPARATOR + "안녕하세요! 우테코 식당 " + MONTH + "월 이벤트 플래너입니다.");
     }
 
-    public static void printPrefaceOfResultOf(int day) {
+    public static void printPrefaceOfResultWith(int day) {
         System.out.println(MONTH + "월 " + day + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
     }
 
-    public static void printOrderedMenu(Map<Dish, Integer> orderedMenu) {
+    public static void printEachOrderBy(Map<Dish, Integer> orderedMenu) {
         StringBuilder readableFormatOfMenu = new StringBuilder(LINE_SEPARATOR + "<주문 메뉴>" + LINE_SEPARATOR);
         for (Dish dish : orderedMenu.keySet()) {
             readableFormatOfMenu.append(dish.getName()).append(" ")
@@ -31,44 +31,44 @@ public class OutputView {
         System.out.println(readableFormatOfMenu);
     }
 
-    public static void printBeforeDiscount(int totalPriceBeforeDiscount) {
+    public static void printBeforeDiscount(int totalPrice) {
         System.out.println("<할인 전 총주문 금액>" + LINE_SEPARATOR
-                + String.format("%,d원", totalPriceBeforeDiscount));
+                + String.format("%,d원", totalPrice));
     }
 
     public static void printPresent(String gift) {
         System.out.println(LINE_SEPARATOR + "<증정 메뉴>" + LINE_SEPARATOR + gift);
     }
 
-    public static void printBenefitsDetails(Map<String, Integer> benefitsDetails) {
+    public static void printDetailsOf(Map<String, Integer> allBenefits) {
         StringBuilder readableFormatOfBenefits = new StringBuilder(LINE_SEPARATOR + "<혜택 내역>" + LINE_SEPARATOR);
-        if (benefitsDetails.isEmpty()) {
-            System.out.println(readableFormatOfBenefits + NONE + LINE_SEPARATOR);
-            return;
+        if (allBenefits.isEmpty()) {
+            readableFormatOfBenefits.append(NONE).append(LINE_SEPARATOR);
         }
-        for (String event : benefitsDetails.keySet()) {
-            int benefit = benefitsDetails.get(event);
+        for (String event : allBenefits.keySet()) {
+            int benefit = allBenefits.get(event);
             readableFormatOfBenefits.append(event).append(": ")
                     .append("-").append(String.format("%,d원", benefit)).append(LINE_SEPARATOR);
         }
         System.out.println(readableFormatOfBenefits);
     }
 
-    public static void printTotalBenefits(int totalBenefits) {
-        if (totalBenefits == NOTHING) {
-            System.out.println("<총혜택 금액>" + LINE_SEPARATOR + String.format("%,d원", NOTHING));
-            return;
+    public static void printTheSumOf(int totalBenefits) {
+        StringBuilder outputOfTotalBenefits = new StringBuilder("<총혜택 금액>" + LINE_SEPARATOR);
+        if (totalBenefits > NOTHING) {
+            outputOfTotalBenefits.append("-");
         }
-        System.out.println("<총혜택 금액>" + LINE_SEPARATOR + String.format("-%,d원", totalBenefits));
+        outputOfTotalBenefits.append(String.format("%,d원", totalBenefits));
+        System.out.println(outputOfTotalBenefits);
     }
 
-    public static void printExpectedPriceToPay(int expectedPriceToPay) {
+    public static void printExpected(int priceToPay) {
         System.out.println(
-                LINE_SEPARATOR + "<할인 후 예상 결제 금액>" + LINE_SEPARATOR + String.format("%,d원", expectedPriceToPay)
+                LINE_SEPARATOR + "<할인 후 예상 결제 금액>" + LINE_SEPARATOR + String.format("%,d원", priceToPay)
         );
     }
 
-    public static void printBadge(Badge badge) {
+    public static void printLastMessageWith(Badge badge) {
         System.out.println(LINE_SEPARATOR + "<" + MONTH + "월 이벤트 배지>" + LINE_SEPARATOR + badge.getName());
     }
 }

@@ -29,7 +29,7 @@ public class OutputViewTest {
     }
 
     @AfterEach
-    public void printOutput() {
+    public void reset() {
         System.setOut(standardOut);
         captor.reset();
     }
@@ -49,7 +49,7 @@ public class OutputViewTest {
     @Test
     void testPrintingPrefaceOfResult() {
         int userVisitingDay = 3;
-        OutputView.printPrefaceOfResultOf(userVisitingDay);
+        OutputView.printPrefaceOfResultWith(userVisitingDay);
         assertThat(output()).isEqualTo("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
     }
 
@@ -59,7 +59,7 @@ public class OutputViewTest {
         Map<Dish, Integer> userOrderedMenu = new LinkedHashMap<>();
         userOrderedMenu.put(new Dish("타파스"), 1);
         userOrderedMenu.put(new Dish("제로콜라"), 1);
-        OutputView.printOrderedMenu(userOrderedMenu);
+        OutputView.printEachOrderBy(userOrderedMenu);
         assertThat(output()).isEqualTo("<주문 메뉴>" + LINE_SEPARATOR + "타파스 1개" + LINE_SEPARATOR + "제로콜라 1개");
     }
 
@@ -92,7 +92,7 @@ public class OutputViewTest {
         benefitDetails.put(Event.WEEKDAY.getName(), 4_046);
         benefitDetails.put(Event.SPECIAL.getName(), 1_000);
         benefitDetails.put(Event.PRESENT.getName(), 25_000);
-        OutputView.printBenefitsDetails(benefitDetails);
+        OutputView.printDetailsOf(benefitDetails);
         assertThat(output()).isEqualTo(
                 "<혜택 내역>" + LINE_SEPARATOR +
                         "크리스마스 디데이 할인: -1,200원" + LINE_SEPARATOR +
@@ -105,7 +105,7 @@ public class OutputViewTest {
     @Test
     void testPrintingBenefitsNone() {
         Map<String, Integer> benefitDetails = new LinkedHashMap<>();
-        OutputView.printBenefitsDetails(benefitDetails);
+        OutputView.printDetailsOf(benefitDetails);
         assertThat(output()).isEqualTo(
                 "<혜택 내역>" + LINE_SEPARATOR +
                         "없음"
@@ -116,15 +116,15 @@ public class OutputViewTest {
     @Test
     void testPrintingTotalBenefits() {
         int totalBenefits = 31_246;
-        OutputView.printTotalBenefits(totalBenefits);
+        OutputView.printTheSumOf(totalBenefits);
         assertThat(output()).isEqualTo("<총혜택 금액>" + LINE_SEPARATOR + "-31,246원");
     }
 
     @DisplayName("예상 결제 금액 출력")
     @Test
     void testPrintingExpectedPriceToPay() {
-        int expectedPriceToPay = 135_754;
-        OutputView.printExpectedPriceToPay(expectedPriceToPay);
+        int priceToPay = 135_754;
+        OutputView.printExpected(priceToPay);
         assertThat(output()).isEqualTo("<할인 후 예상 결제 금액>" + LINE_SEPARATOR + "135,754원");
     }
 
@@ -132,14 +132,14 @@ public class OutputViewTest {
     @Test
     void testPrintingSantaBadge() {
         Badge badge = Badge.SANTA;
-        OutputView.printBadge(badge);
+        OutputView.printLastMessageWith(badge);
         assertThat(output()).isEqualTo("<12월 이벤트 배지>" + LINE_SEPARATOR + "산타");
     }
 
     @Test
     void testPrintingNoneBadge() {
         Badge badge = Badge.NONE;
-        OutputView.printBadge(badge);
+        OutputView.printLastMessageWith(badge);
         assertThat(output()).isEqualTo("<12월 이벤트 배지>" + LINE_SEPARATOR + "없음");
     }
 }
