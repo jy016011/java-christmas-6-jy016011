@@ -50,4 +50,8 @@ public class OutputView {
         }
         System.out.println(readableFormatOfBenefits);
     }
+
+    public static void printTotalBenefits(int totalBenefit) {
+        System.out.println(LINE_SEPARATOR + "<총혜택 금액>" + LINE_SEPARATOR + String.format("-%,d원", totalBenefit));
+    }
 }

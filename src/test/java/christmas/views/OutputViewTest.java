@@ -102,4 +102,12 @@ public class OutputViewTest {
         );
     }
 
+    @DisplayName("총혜택 금액 출력")
+    @Test
+    void testPrintingTotalBenefits() {
+        int totalBenefits = 31_246;
+        OutputView.printTotalBenefits(totalBenefits);
+        assertThat(output()).isEqualTo("<총혜택 금액>" + LINE_SEPARATOR + "-31,246원");
+    }
+
 }
