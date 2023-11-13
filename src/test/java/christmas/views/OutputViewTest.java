@@ -2,14 +2,19 @@ package christmas.views;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.Dish;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class OutputViewTest {
+    private static final String LINE_SEPARATOR = System.lineSeparator();
+
     private PrintStream standardOut;
     private ByteArrayOutputStream captor;
 
@@ -43,5 +48,15 @@ public class OutputViewTest {
         int userVisitingDay = 3;
         OutputView.printPrefaceOfResult(userVisitingDay);
         assertThat(output()).isEqualTo("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+    }
+
+    @DisplayName("주문 메뉴 출력 확인")
+    @Test
+    void testPrintingOrderedMenu() {
+        Map<Dish, Integer> userOrderedMenu = new HashMap<>();
+        userOrderedMenu.put(new Dish("타파스"), 1);
+        userOrderedMenu.put(new Dish("제로콜라"), 1);
+        OutputView.printOrderedMenu(userOrderedMenu);
+        assertThat(output()).contains("<주문 메뉴>", "타파스 1개", "제로콜라 1개");
     }
 }

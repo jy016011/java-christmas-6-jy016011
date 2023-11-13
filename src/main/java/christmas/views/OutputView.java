@@ -1,7 +1,11 @@
 package christmas.views;
 
+import christmas.domain.Dish;
+import java.util.Map;
+
 public class OutputView {
     private static final int MONTH = 12;
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     private OutputView() {
     }
@@ -12,5 +16,15 @@ public class OutputView {
 
     public static void printPrefaceOfResult(int day) {
         System.out.println(MONTH + "월 " + day + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+    }
+
+    public static void printOrderedMenu(Map<Dish, Integer> orderedMenu) {
+        StringBuilder readableFormatOfMenu = new StringBuilder("<주문 메뉴>" + LINE_SEPARATOR);
+        for (Dish dish : orderedMenu.keySet()) {
+            readableFormatOfMenu.append(dish.getName()).append(" ")
+                    .append(orderedMenu.get(dish)).append("개")
+                    .append(LINE_SEPARATOR);
+        }
+        System.out.println(readableFormatOfMenu);
     }
 }
