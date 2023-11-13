@@ -2,6 +2,7 @@ package christmas.views;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-public class OutputViewTest {
+public class InputViewTest {
     private PrintStream standardOut;
     private ByteArrayOutputStream captor;
 
@@ -30,10 +31,18 @@ public class OutputViewTest {
         return captor.toString().trim();
     }
 
-    @DisplayName("플래너 인삿말 출력잘하는지 확인")
+    private void command(final String... args) {
+        final byte[] buf = String.join("\n", args).getBytes();
+        System.setIn(new ByteArrayInputStream(buf));
+    }
+
+    @DisplayName("밤문 날짜 입력 확인")
     @Test
-    void testPrintingGreetings() {
-        OutputView.printGreetings();
-        assertThat(output()).isEqualTo("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
+    void testGettingVisitingDayInput() {
+        String userInput = "3";
+        command(userInput);
+        String systemReceived = InputView.getVisitingDayInput();
+        assertThat(output()).isEqualTo("12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해주세요!)");
+        assertThat(systemReceived).isEqualTo(userInput);
     }
 }
