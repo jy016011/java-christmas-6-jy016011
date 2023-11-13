@@ -110,4 +110,11 @@ public class OutputViewTest {
         assertThat(output()).isEqualTo("<총혜택 금액>" + LINE_SEPARATOR + "-31,246원");
     }
 
+    @DisplayName("예상 결제 금액 출력")
+    @Test
+    void testPrintingExpectedPriceToPay() {
+        int expectedPriceToPay = 135_754;
+        OutputView.printExpectedPriceToPay(expectedPriceToPay);
+        assertThat(output()).isEqualTo("<할인 후 예상 결제 금액>" + LINE_SEPARATOR + "135,754원");
+    }
 }

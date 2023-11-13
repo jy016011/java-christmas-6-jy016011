@@ -51,7 +51,15 @@ public class OutputView {
         System.out.println(readableFormatOfBenefits);
     }
 
-    public static void printTotalBenefits(int totalBenefit) {
-        System.out.println(LINE_SEPARATOR + "<총혜택 금액>" + LINE_SEPARATOR + String.format("-%,d원", totalBenefit));
+    public static void printTotalBenefits(int totalBenefits) {
+        System.out.println(
+                LINE_SEPARATOR + "<총혜택 금액>" + LINE_SEPARATOR + String.format("-%,d원", totalBenefits)
+        );
+    }
+
+    public static void printExpectedPriceToPay(int expectedPriceToPay) {
+        System.out.println(
+                LINE_SEPARATOR + "<할인 후 예상 결제 금액>" + LINE_SEPARATOR + String.format("%,d원", expectedPriceToPay)
+        );
     }
 }
