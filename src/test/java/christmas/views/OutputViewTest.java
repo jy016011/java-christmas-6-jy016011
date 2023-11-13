@@ -35,22 +35,22 @@ public class OutputViewTest {
         return captor.toString().trim();
     }
 
-    @DisplayName("플래너 인삿말 출력잘하는지 확인")
+    @DisplayName("플래너 인삿말 출력")
     @Test
     void testPrintingGreetings() {
         OutputView.printGreetings();
         assertThat(output()).isEqualTo("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
     }
 
-    @DisplayName("결과 출력 전의 머리말 출력확인")
+    @DisplayName("결과 출력 전의 머리말 출력")
     @Test
     void testPrintingPrefaceOfResult() {
         int userVisitingDay = 3;
-        OutputView.printPrefaceOfResult(userVisitingDay);
+        OutputView.printPrefaceOfResultOf(userVisitingDay);
         assertThat(output()).isEqualTo("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
     }
 
-    @DisplayName("주문 메뉴 출력 확인")
+    @DisplayName("주문 메뉴 출력")
     @Test
     void testPrintingOrderedMenu() {
         Map<Dish, Integer> userOrderedMenu = new HashMap<>();
@@ -58,5 +58,13 @@ public class OutputViewTest {
         userOrderedMenu.put(new Dish("제로콜라"), 1);
         OutputView.printOrderedMenu(userOrderedMenu);
         assertThat(output()).contains("<주문 메뉴>", "타파스 1개", "제로콜라 1개");
+    }
+
+    @DisplayName("할인 전 총주문 금액 출력")
+    @Test
+    void testPrintingTotalPriceBeforeDiscount() {
+        int totalPrice = 8_500;
+        OutputView.printBeforeDiscount(totalPrice);
+        assertThat(output()).isEqualTo("<할인 전 총주문 금액>" + LINE_SEPARATOR + "8,500원");
     }
 }
