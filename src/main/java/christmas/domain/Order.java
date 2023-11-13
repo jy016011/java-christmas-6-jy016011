@@ -16,6 +16,8 @@ public class Order {
     private final static int NOTHING = 0;
     private final static int MIN_TOTAL = 10_000;
     private final static int EVENT_TOTAL = 120_000;
+    private final static Menu MAIN_DISH = Menu.MAIN_DISH;
+    private final static Menu DESSERT = Menu.DESSERT;
     private final static Error ERROR_HEADER = Error.ERROR_HEADER;
 
     private final HashMap<Dish, Integer> dishes = new LinkedHashMap<>();
@@ -43,20 +45,20 @@ public class Order {
         return totalPrice >= EVENT_TOTAL;
     }
 
-    public int getDessertCount() {
+    public int getMainDishCount() {
         int count = NOTHING;
         for (Dish dish : dishes.keySet()) {
-            if (dish.getType().equals("디저트")) {
+            if (dish.getType().equals(MAIN_DISH.getType())) {
                 count += dishes.get(dish);
             }
         }
         return count;
     }
 
-    public int getMainDishCount() {
+    public int getDessertCount() {
         int count = NOTHING;
         for (Dish dish : dishes.keySet()) {
-            if (dish.getType().equals("메인")) {
+            if (dish.getType().equals(DESSERT.getType())) {
                 count += dishes.get(dish);
             }
         }
