@@ -14,7 +14,7 @@ public class OutputView {
     }
 
     public static void printGreetings() {
-        System.out.println("안녕하세요! 우테코 식당 " + MONTH + "월 이벤트 플래너입니다.");
+        System.out.println(LINE_SEPARATOR + "안녕하세요! 우테코 식당 " + MONTH + "월 이벤트 플래너입니다.");
     }
 
     public static void printPrefaceOfResultOf(int day) {
@@ -32,7 +32,7 @@ public class OutputView {
     }
 
     public static void printBeforeDiscount(int totalPriceBeforeDiscount) {
-        System.out.println(LINE_SEPARATOR + "<할인 전 총주문 금액>" + LINE_SEPARATOR
+        System.out.println("<할인 전 총주문 금액>" + LINE_SEPARATOR
                 + String.format("%,d원", totalPriceBeforeDiscount));
     }
 
@@ -43,7 +43,7 @@ public class OutputView {
     public static void printBenefitsDetails(Map<String, Integer> benefitsDetails) {
         StringBuilder readableFormatOfBenefits = new StringBuilder(LINE_SEPARATOR + "<혜택 내역>" + LINE_SEPARATOR);
         if (benefitsDetails.isEmpty()) {
-            System.out.println(readableFormatOfBenefits + NONE);
+            System.out.println(readableFormatOfBenefits + NONE + LINE_SEPARATOR);
             return;
         }
         for (String event : benefitsDetails.keySet()) {
@@ -55,9 +55,11 @@ public class OutputView {
     }
 
     public static void printTotalBenefits(int totalBenefits) {
-        System.out.println(
-                LINE_SEPARATOR + "<총혜택 금액>" + LINE_SEPARATOR + String.format("-%,d원", totalBenefits)
-        );
+        if (totalBenefits == NOTHING) {
+            System.out.println("<총혜택 금액>" + LINE_SEPARATOR + String.format("%,d원", NOTHING));
+            return;
+        }
+        System.out.println("<총혜택 금액>" + LINE_SEPARATOR + String.format("-%,d원", totalBenefits));
     }
 
     public static void printExpectedPriceToPay(int expectedPriceToPay) {

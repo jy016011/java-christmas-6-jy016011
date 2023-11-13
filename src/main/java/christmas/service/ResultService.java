@@ -1,5 +1,6 @@
 package christmas.service;
 
+import christmas.constants.Badge;
 import christmas.constants.Error;
 import christmas.constants.Event;
 import christmas.domain.Dish;
@@ -30,6 +31,10 @@ public class ResultService {
         visitingDate = new VisitingDate(day);
     }
 
+    public int getDate() {
+        return visitingDate.getDay();
+    }
+
     public void setOrder(String userInput) {
         List<String> dishNames = new ArrayList<>();
         List<Integer> dishCounts = new ArrayList<>();
@@ -54,10 +59,29 @@ public class ResultService {
         return NONE;
     }
 
-    public Map<String, Integer> getBenefitsDetails() {
+    public int getTotalDiscount() {
+        int totalDiscount = NOTHING;
+        totalDiscount += getChristmasDDayDiscount();
+        totalDiscount += getWeekdayDiscount();
+        totalDiscount += getWeekendDiscount();
+        totalDiscount += getSpecialDiscount();
+        return totalDiscount;
+    }
+
+    public int getTotalDiscountedPrice() {
+        int totalPriceDiscounted = order.getTotalPrice();
+        totalPriceDiscounted -= getTotalDiscount();
+        return totalPriceDiscounted;
+    }
+
+    public int getTotalBenefit() {
+        return getTotalDiscount() + getGiftBenefit();
+    }
+
+    public Map<String, Integer> synthesizeAllBenefits() {
         Map<String, Integer> benefitsDetails = new LinkedHashMap<>();
         for (Event event : Event.values()) {
-            int benefit = getBenefit(event);
+            int benefit = getBenefitBy(event);
             if (benefit == NOTHING) {
                 continue;
             }
@@ -66,7 +90,11 @@ public class ResultService {
         return benefitsDetails;
     }
 
-    private int getBenefit(Event event) {
+    public Badge getBadge() {
+        return Badge.getBy(getTotalBenefit());
+    }
+
+    private int getBenefitBy(Event event) {
         if (event == Event.CHRISTMAS_D_DAY) {
             return getChristmasDDayDiscount();
         }
@@ -123,25 +151,6 @@ public class ResultService {
             return Event.PRESENT.getBaseDiscount();
         }
         return NOTHING;
-    }
-
-    public int getTotalDiscount() {
-        int totalDiscount = NOTHING;
-        totalDiscount += getChristmasDDayDiscount();
-        totalDiscount += getWeekdayDiscount();
-        totalDiscount += getWeekendDiscount();
-        totalDiscount += getSpecialDiscount();
-        return totalDiscount;
-    }
-
-    public int getTotalDiscountedPrice() {
-        int totalPriceDiscounted = order.getTotalPrice();
-        totalPriceDiscounted -= getTotalDiscount();
-        return totalPriceDiscounted;
-    }
-
-    public int getTotalBenefit() {
-        return getTotalDiscount() + getGiftBenefit();
     }
 
     private void validateFormat(String userInput) {
