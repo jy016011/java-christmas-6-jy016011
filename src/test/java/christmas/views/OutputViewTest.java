@@ -36,4 +36,12 @@ public class OutputViewTest {
         OutputView.printGreetings();
         assertThat(output()).isEqualTo("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
     }
+
+    @DisplayName("결과 출력 전의 머리말 출력확인")
+    @Test
+    void testPrintingPrefaceOfResult() {
+        int userVisitingDay = 3;
+        OutputView.printPrefaceOfResult(userVisitingDay);
+        assertThat(output()).isEqualTo("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+    }
 }
