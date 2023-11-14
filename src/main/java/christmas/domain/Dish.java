@@ -2,46 +2,33 @@ package christmas.domain;
 
 import christmas.constants.Error;
 import christmas.constants.MenuBoard;
-import christmas.constants.menu.Appetizer;
-import christmas.constants.menu.Dessert;
-import christmas.constants.menu.Drink;
-import christmas.constants.menu.MainDish;
 import christmas.constants.menu.Menu;
 import java.util.Objects;
 
 public class Dish {
     private static final Error ERROR_HEADER = Error.ERROR_HEADER;
-    private final String name;
+    private final Menu menu;
 
     public Dish(String name) {
         validate(name);
-        this.name = name;
+        this.menu = MenuBoard.getBy(name);
     }
 
     public Class<? extends Menu> getType() {
-        return MenuBoard.getBy(name).getClass();
+        return menu.getClass();
     }
 
     public int getPrice() {
-        if (getType() == Appetizer.class) {
-            return Appetizer.getPriceBy(name);
-        }
-        if (getType() == MainDish.class) {
-            return MainDish.getPriceBy(name);
-        }
-        if (getType() == Dessert.class) {
-            return Dessert.getPriceBy(name);
-        }
-        return Drink.getPriceBy(name);
+        return menu.getPrice();
     }
 
     public String getName() {
-        return name;
+        return menu.getName();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(menu);
     }
 
     @Override
@@ -53,7 +40,7 @@ public class Dish {
             return false;
         }
         Dish dish = (Dish) o;
-        return this.name.equals(dish.name);
+        return this.menu == dish.menu;
     }
 
     private void validate(String name) {
