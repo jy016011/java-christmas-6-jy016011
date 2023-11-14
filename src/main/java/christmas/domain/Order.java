@@ -2,7 +2,7 @@ package christmas.domain;
 
 import christmas.constants.Error;
 import christmas.constants.Menu;
-import christmas.utils.Validator;
+import christmas.utils.ArgumentValidator;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -71,7 +71,7 @@ public class Order {
     }
 
     private void validateNames(List<String> dishNames) {
-        Validator.validateIsUnique(dishNames);
+        ArgumentValidator.isUnique(dishNames);
         validateNotAllDrinks(dishNames);
     }
 
@@ -85,11 +85,11 @@ public class Order {
     private void validateCounts(List<Integer> dishCounts) {
         int totalCounts = NOTHING;
         for (int dishCount : dishCounts) {
-            Validator.validateNotLessThan(dishCount, MIN_COUNT);
-            Validator.validateNotGreaterThan(dishCount, MAX_COUNT);
+            ArgumentValidator.isNotLessThan(dishCount, MIN_COUNT);
+            ArgumentValidator.isNotGreaterThan(dishCount, MAX_COUNT);
             totalCounts += dishCount;
         }
-        Validator.validateNotGreaterThan(totalCounts, MAX_COUNT);
+        ArgumentValidator.isNotGreaterThan(totalCounts, MAX_COUNT);
     }
 
     private void setDishes(List<String> dishNames, List<Integer> dishCounts) {

@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.utils.Validator;
+import christmas.utils.ArgumentValidator;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -50,7 +50,7 @@ public class VisitingDate {
     }
 
     private void validate(int day) {
-        Validator.validateNotLessThan(day, FIRST_DAY);
-        Validator.validateNotGreaterThan(day, LAST_DAY);
+        ArgumentValidator.isNotLessThan(day, FIRST_DAY);
+        ArgumentValidator.isNotGreaterThan(day, LAST_DAY);
     }
 }

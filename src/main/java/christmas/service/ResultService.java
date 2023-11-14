@@ -5,8 +5,8 @@ import christmas.constants.Event;
 import christmas.domain.Dish;
 import christmas.domain.Order;
 import christmas.domain.VisitingDate;
+import christmas.utils.ArgumentValidator;
 import christmas.utils.StringChanger;
-import christmas.utils.Validator;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -155,7 +155,7 @@ public class ResultService {
                 .filter(c -> c == StringChanger.toChar(DISH_SEPARATOR)).count();
         int dishNameAndCountSeparatorCount = (int) userInput.chars()
                 .filter(c -> c == StringChanger.toChar(DISH_NAME_AND_COUNT_SEPARATOR)).count();
-        Validator.validateIsEqual(
+        ArgumentValidator.isEqual(
                 dishSeparatorCount,
                 dishNameAndCountSeparatorCount - VALID_DIFFERENCE
         );
@@ -171,11 +171,11 @@ public class ResultService {
     }
 
     private void validateIsSeparated(List<String> dishNameAndCount) {
-        Validator.validateIsEqual(dishNameAndCount.size(), VALID_SIZE);
+        ArgumentValidator.isEqual(dishNameAndCount.size(), VALID_SIZE);
     }
 
     private int toNumber(String userInput) {
-        Validator.validateIsNumber(userInput);
+        ArgumentValidator.isNumber(userInput);
         return StringChanger.toInteger(userInput);
     }
 }
