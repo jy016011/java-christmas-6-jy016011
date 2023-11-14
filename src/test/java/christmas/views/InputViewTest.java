@@ -54,7 +54,7 @@ public class InputViewTest {
         String userInput = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
         command(userInput);
         String systemReceived = InputView.getOrderInput();
-        assertThat(output()).isEqualTo("주문하실 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+        assertThat(output()).isEqualTo("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         assertThat(systemReceived).isEqualTo(userInput);
     }
 }
