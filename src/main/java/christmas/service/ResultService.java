@@ -21,6 +21,7 @@ public class ResultService {
     private final static int DISH_COUNT = 1;
     private final static int VALID_SIZE = 2;
     private final static int VALID_DIFFERENCE = 1;
+    private final static int FIRST_DAY = 1;
 
     private Order order;
     private VisitingDate visitingDate;
@@ -31,7 +32,7 @@ public class ResultService {
     }
 
     public int getDate() {
-        return visitingDate.getDay();
+        return visitingDate.getDifferenceFromFirstDay() + FIRST_DAY;
     }
 
     public void setOrder(String userInput) {
@@ -75,7 +76,7 @@ public class ResultService {
         return getTotalDiscount() + getGiftBenefit();
     }
 
-    public Map<String, Integer> synthesizeAllBenefits() {
+    public Map<String, Integer> getSynthesizedAllBenefits() {
         Map<String, Integer> benefitsDetails = new LinkedHashMap<>();
         for (Event event : Event.values()) {
             int benefit = getBenefitBy(event);

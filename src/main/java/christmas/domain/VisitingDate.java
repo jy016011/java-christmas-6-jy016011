@@ -25,10 +25,6 @@ public class VisitingDate {
         localDate = LocalDate.of(YEAR, MONTH, day);
     }
 
-    public int getDay() {
-        return localDate.getDayOfMonth();
-    }
-
     public int getDifferenceFromFirstDay() {
         return localDate.getDayOfMonth() - FIRST_DAY;
     }

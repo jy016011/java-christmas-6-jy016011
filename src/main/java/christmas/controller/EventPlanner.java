@@ -62,7 +62,7 @@ public class EventPlanner {
 
     private void printAllBenefits() {
         OutputView.printPresent(resultService.getGift());
-        OutputView.printDetailsOf(resultService.synthesizeAllBenefits());
+        OutputView.printDetailsOf(resultService.getSynthesizedAllBenefits());
         OutputView.printTheSumOf(resultService.getTotalBenefit());
         OutputView.printExpected(resultService.getTotalDiscountedPrice());
     }
