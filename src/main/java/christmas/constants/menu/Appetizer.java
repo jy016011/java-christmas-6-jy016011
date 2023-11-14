@@ -20,13 +20,6 @@ public enum Appetizer implements Menu {
         return Arrays.stream(Appetizer.values()).toList();
     }
 
-    public static int getPriceBy(String name) {
-        return Arrays.stream(Appetizer.values())
-                .filter(appetizer -> appetizer.getName().equals(name))
-                .map(Appetizer::getPrice)
-                .findFirst().orElseThrow(IllegalArgumentException::new);
-    }
-
     @Override
     public int getPrice() {
         return price;

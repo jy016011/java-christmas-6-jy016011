@@ -20,14 +20,7 @@ public enum MainDish implements Menu {
     public static List<MainDish> getMainDishes() {
         return Arrays.stream(MainDish.values()).toList();
     }
-
-    public static int getPriceBy(String name) {
-        return Arrays.stream(MainDish.values())
-                .filter(mainDish -> mainDish.getName().equals(name))
-                .map(MainDish::getPrice)
-                .findFirst().orElseThrow(IllegalArgumentException::new);
-    }
-
+    
     @Override
     public int getPrice() {
         return price;

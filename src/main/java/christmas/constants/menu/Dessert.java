@@ -19,13 +19,6 @@ public enum Dessert implements Menu {
         return Arrays.stream(Dessert.values()).toList();
     }
 
-    public static int getPriceBy(String name) {
-        return Arrays.stream(Dessert.values())
-                .filter(dessert -> dessert.getName().equals(name))
-                .map(Dessert::getPrice)
-                .findFirst().orElseThrow(IllegalArgumentException::new);
-    }
-
     @Override
     public int getPrice() {
         return price;
