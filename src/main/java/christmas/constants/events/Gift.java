@@ -4,7 +4,7 @@ import christmas.constants.dishes.Drink;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Gift {
+public enum Gift implements Event {
     CHAMPAGNE(Drink.CHAMPAGNE.getPrice(), Drink.CHAMPAGNE.getName(), "증정 이벤트");
 
     private final int price;

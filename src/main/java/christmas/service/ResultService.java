@@ -1,9 +1,9 @@
 package christmas.service;
 
 import christmas.constants.Badge;
-import christmas.constants.Event;
 import christmas.constants.dishes.Drink;
 import christmas.constants.events.Discount;
+import christmas.constants.events.Event;
 import christmas.constants.events.Gift;
 import christmas.domain.Dish;
 import christmas.domain.Order;
@@ -11,9 +11,12 @@ import christmas.domain.VisitingDate;
 import christmas.utils.ArgumentValidator;
 import christmas.utils.StringChanger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ResultService {
     private final static String DISH_SEPARATOR = ",";
@@ -31,6 +34,8 @@ public class ResultService {
 
     private final static int GIFT_COUNT = 1;
     private final static Drink GIFT = Drink.CHAMPAGNE;
+    private final static List<Event> events = Stream.of(Discount.getDiscounts(), Gift.getGifts())
+            .flatMap(Collection::stream).collect(Collectors.toList());
 
     private Order order;
     private VisitingDate visitingDate;
@@ -79,10 +84,10 @@ public class ResultService {
 
     public Map<String, Integer> getSynthesizedAllBenefits() {
         Map<String, Integer> benefitsDetails = new LinkedHashMap<>();
-        for (String event : Event.getAllEvents()) {
+        for (Event event : events) {
             int benefit = getBenefitBy(event);
             if (benefit > NOTHING) {
-                benefitsDetails.put(event, benefit);
+                benefitsDetails.put(event.getEventName(), benefit);
             }
         }
         return benefitsDetails;
@@ -101,17 +106,17 @@ public class ResultService {
         return totalDiscount;
     }
 
-    private int getBenefitBy(String event) {
-        if (event.equals(Discount.CHRISTMAS_D_DAY.getEventName())) {
+    private int getBenefitBy(Event event) {
+        if (event == Discount.CHRISTMAS_D_DAY) {
             return getChristmasDDayDiscount();
         }
-        if (event.equals(Discount.WEEKDAY.getEventName())) {
+        if (event == Discount.WEEKDAY) {
             return getWeekdayDiscount();
         }
-        if (event.equals(Discount.WEEKEND.getEventName())) {
+        if (event == Discount.WEEKEND) {
             return getWeekendDiscount();
         }
-        if (event.equals(Discount.SPECIAL.getEventName())) {
+        if (event == Discount.SPECIAL) {
             return getSpecialDiscount();
         }
         return getGiftBenefit();
