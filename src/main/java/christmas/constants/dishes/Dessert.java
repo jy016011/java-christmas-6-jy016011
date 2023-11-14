@@ -4,16 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Dessert {
-    CHOCO_CAKE(15_000, "15,000원", "초코케이크"),
-    ICE_CREAM(5_000, "5,000원", "아이스크림");
+    CHOCO_CAKE(15_000, "초코케이크"),
+    ICE_CREAM(5_000, "아이스크림");
 
     private final int price;
-    private final String priceToWon;
     private final String name;
 
-    Dessert(int price, String priceToWon, String name) {
+    Dessert(int price, String name) {
         this.price = price;
-        this.priceToWon = priceToWon;
         this.name = name;
     }
 
@@ -26,10 +24,6 @@ public enum Dessert {
 
     public int getPrice() {
         return price;
-    }
-
-    public String getPriceToWon() {
-        return priceToWon;
     }
 
     public String getName() {
