@@ -59,15 +59,6 @@ public class ResultService {
         return NONE;
     }
 
-    public int getTotalDiscount() {
-        int totalDiscount = NOTHING;
-        totalDiscount += getChristmasDDayDiscount();
-        totalDiscount += getWeekdayDiscount();
-        totalDiscount += getWeekendDiscount();
-        totalDiscount += getSpecialDiscount();
-        return totalDiscount;
-    }
-
     public int getTotalDiscountedPrice() {
         return order.getTotalPrice() - getTotalDiscount();
     }
@@ -89,6 +80,15 @@ public class ResultService {
 
     public Badge getBadge() {
         return Badge.getBy(getTotalBenefit());
+    }
+
+    private int getTotalDiscount() {
+        int totalDiscount = NOTHING;
+        totalDiscount += getChristmasDDayDiscount();
+        totalDiscount += getWeekdayDiscount();
+        totalDiscount += getWeekendDiscount();
+        totalDiscount += getSpecialDiscount();
+        return totalDiscount;
     }
 
     private int getBenefitBy(Event event) {
