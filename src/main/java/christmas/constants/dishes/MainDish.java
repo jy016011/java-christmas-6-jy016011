@@ -19,7 +19,7 @@ public enum MainDish {
 
     public static int getPriceBy(String name) {
         return Arrays.stream(MainDish.values())
-                .filter(appetizer -> appetizer.getName().equals(name))
+                .filter(mainDish -> mainDish.getName().equals(name))
                 .map(MainDish::getPrice)
                 .findFirst().orElseThrow(IllegalArgumentException::new);
     }

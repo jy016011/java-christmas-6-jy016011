@@ -18,7 +18,7 @@ public enum Drink {
 
     public static int getPriceBy(String name) {
         return Arrays.stream(Drink.values())
-                .filter(appetizer -> appetizer.getName().equals(name))
+                .filter(drink -> drink.getName().equals(name))
                 .map(Drink::getPrice)
                 .findFirst().orElseThrow(IllegalArgumentException::new);
     }
