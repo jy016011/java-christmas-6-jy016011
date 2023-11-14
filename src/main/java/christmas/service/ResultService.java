@@ -1,22 +1,20 @@
 package christmas.service;
 
 import christmas.constants.Badge;
-import christmas.constants.dishes.Drink;
-import christmas.constants.events.Discount;
-import christmas.constants.events.Event;
-import christmas.constants.events.Gift;
+import christmas.constants.EventHandler;
+import christmas.constants.event.Discount;
+import christmas.constants.event.Event;
+import christmas.constants.event.Gift;
+import christmas.constants.menu.Drink;
 import christmas.domain.Dish;
 import christmas.domain.Order;
 import christmas.domain.VisitingDate;
 import christmas.utils.ArgumentValidator;
 import christmas.utils.StringChanger;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ResultService {
     private final static String DISH_SEPARATOR = ",";
@@ -34,8 +32,7 @@ public class ResultService {
 
     private final static int GIFT_COUNT = 1;
     private final static Drink GIFT = Drink.CHAMPAGNE;
-    private final static List<Event> events = Stream.of(Discount.getDiscounts(), Gift.getGifts())
-            .flatMap(Collection::stream).collect(Collectors.toList());
+    private final static List<Event> events = EventHandler.getAllEvent();
 
     private Order order;
     private VisitingDate visitingDate;

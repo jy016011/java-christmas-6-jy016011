@@ -1,4 +1,4 @@
-package christmas.constants.events;
+package christmas.constants.event;
 
 public interface Event {
     int getBenefit(int count);

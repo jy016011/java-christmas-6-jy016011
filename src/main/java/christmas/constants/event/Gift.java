@@ -1,6 +1,6 @@
-package christmas.constants.events;
+package christmas.constants.event;
 
-import christmas.constants.dishes.Drink;
+import christmas.constants.menu.Drink;
 import java.util.Arrays;
 import java.util.List;
 

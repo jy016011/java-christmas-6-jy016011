@@ -1,9 +1,9 @@
 package christmas.constants;
 
-import christmas.constants.dishes.Appetizer;
-import christmas.constants.dishes.Dessert;
-import christmas.constants.dishes.Drink;
-import christmas.constants.dishes.MainDish;
+import christmas.constants.menu.Appetizer;
+import christmas.constants.menu.Dessert;
+import christmas.constants.menu.Drink;
+import christmas.constants.menu.MainDish;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

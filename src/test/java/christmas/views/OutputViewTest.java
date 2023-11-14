@@ -3,8 +3,8 @@ package christmas.views;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.constants.Badge;
-import christmas.constants.events.Discount;
-import christmas.constants.events.Gift;
+import christmas.constants.event.Discount;
+import christmas.constants.event.Gift;
 import christmas.domain.Dish;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
