@@ -2,6 +2,9 @@ package christmas.service;
 
 import christmas.constants.Badge;
 import christmas.constants.Event;
+import christmas.constants.dishes.Drink;
+import christmas.constants.events.Discount;
+import christmas.constants.events.Gift;
 import christmas.domain.Dish;
 import christmas.domain.Order;
 import christmas.domain.VisitingDate;
@@ -15,13 +18,19 @@ import java.util.Map;
 public class ResultService {
     private final static String DISH_SEPARATOR = ",";
     private final static String DISH_NAME_AND_COUNT_SEPARATOR = "-";
+
     private final static String NONE = "없음";
     private final static int NOTHING = 0;
-    private final static int DISH_NAME = 0;
-    private final static int DISH_COUNT = 1;
+
     private final static int VALID_SIZE = 2;
     private final static int VALID_DIFFERENCE = 1;
+
+    private final static int DISH_NAME = 0;
+    private final static int DISH_COUNT = 1;
     private final static int FIRST_DAY = 1;
+
+    private final static int GIFT_COUNT = 1;
+    private final static Drink GIFT = Drink.CHAMPAGNE;
 
     private Order order;
     private VisitingDate visitingDate;
@@ -54,7 +63,8 @@ public class ResultService {
 
     public String getGift() {
         if (order.isEventTarget() && order.canGetGift()) {
-            return Event.PRESENT.getGift();
+            Gift gift = Gift.getBy(GIFT.getName());
+            return gift.getItemBy(GIFT_COUNT);
         }
         return NONE;
     }
@@ -69,10 +79,10 @@ public class ResultService {
 
     public Map<String, Integer> getSynthesizedAllBenefits() {
         Map<String, Integer> benefitsDetails = new LinkedHashMap<>();
-        for (Event event : Event.values()) {
+        for (String event : Event.getAllEvents()) {
             int benefit = getBenefitBy(event);
             if (benefit > NOTHING) {
-                benefitsDetails.put(event.getName(), benefit);
+                benefitsDetails.put(event, benefit);
             }
         }
         return benefitsDetails;
@@ -91,17 +101,17 @@ public class ResultService {
         return totalDiscount;
     }
 
-    private int getBenefitBy(Event event) {
-        if (event == Event.CHRISTMAS_D_DAY) {
+    private int getBenefitBy(String event) {
+        if (event.equals(Discount.CHRISTMAS_D_DAY.getEventName())) {
             return getChristmasDDayDiscount();
         }
-        if (event == Event.WEEKDAY) {
+        if (event.equals(Discount.WEEKDAY.getEventName())) {
             return getWeekdayDiscount();
         }
-        if (event == Event.WEEKEND) {
+        if (event.equals(Discount.WEEKEND.getEventName())) {
             return getWeekendDiscount();
         }
-        if (event == Event.SPECIAL) {
+        if (event.equals(Discount.SPECIAL.getEventName())) {
             return getSpecialDiscount();
         }
         return getGiftBenefit();
@@ -111,8 +121,7 @@ public class ResultService {
         int discount = NOTHING;
         if (order.isEventTarget() && visitingDate.isChristmasDDay()) {
             int additionalCount = visitingDate.getDifferenceFromFirstDay();
-            discount = Event.CHRISTMAS_D_DAY.getBaseDiscount() +
-                    Event.CHRISTMAS_D_DAY.getUnitOfChange() * additionalCount;
+            discount = Discount.CHRISTMAS_D_DAY.getBenefit(additionalCount);
         }
         return discount;
     }
@@ -121,7 +130,7 @@ public class ResultService {
         int discount = NOTHING;
         if (order.isEventTarget() && visitingDate.isWeekday()) {
             int additionalCount = order.getDessertCount();
-            discount = Event.WEEKDAY.getUnitOfChange() * additionalCount;
+            discount = Discount.WEEKDAY.getBenefit(additionalCount);
         }
         return discount;
     }
@@ -130,7 +139,7 @@ public class ResultService {
         int discount = NOTHING;
         if (order.isEventTarget() && visitingDate.isWeekend()) {
             int additionalCount = order.getMainDishCount();
-            discount = Event.WEEKEND.getUnitOfChange() * additionalCount;
+            discount = Discount.WEEKDAY.getBenefit(additionalCount);
         }
         return discount;
     }
@@ -138,16 +147,18 @@ public class ResultService {
     private int getSpecialDiscount() {
         int discount = NOTHING;
         if (order.isEventTarget() && visitingDate.isSpecialDay()) {
-            discount = Event.SPECIAL.getBaseDiscount();
+            discount = Discount.SPECIAL.getBenefit(NOTHING);
         }
         return discount;
     }
 
     private int getGiftBenefit() {
-        if (order.isEventTarget() && order.canGetGift()) {
-            return Event.PRESENT.getBaseDiscount();
+        int benefit = NOTHING;
+        if (getGift().contains(GIFT.getName())) {
+            Gift gift = Gift.getBy(GIFT.getName());
+            benefit = gift.getBenefit(GIFT_COUNT);
         }
-        return NOTHING;
+        return benefit;
     }
 
     private void validateFormat(String userInput) {

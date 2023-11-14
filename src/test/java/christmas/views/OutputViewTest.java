@@ -3,7 +3,8 @@ package christmas.views;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.constants.Badge;
-import christmas.constants.Event;
+import christmas.constants.events.Discount;
+import christmas.constants.events.Gift;
 import christmas.domain.Dish;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.Test;
 public class OutputViewTest {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String NONE = "없음";
+    private static final int GIFT_COUNT = 1;
 
     private PrintStream standardOut;
     private ByteArrayOutputStream captor;
@@ -74,7 +76,7 @@ public class OutputViewTest {
     @DisplayName("증정 메뉴 출력")
     @Test
     void testPrintingPresentEventWithGift() {
-        OutputView.printPresent(Event.PRESENT.getGift());
+        OutputView.printPresent(Gift.CHAMPAGNE.getItemBy(GIFT_COUNT));
         assertThat(output()).isEqualTo("<증정 메뉴>" + LINE_SEPARATOR + "샴페인 1개");
     }
 
@@ -88,10 +90,10 @@ public class OutputViewTest {
     @Test
     void testPrintingBenefitsDetails() {
         Map<String, Integer> benefitDetails = new LinkedHashMap<>();
-        benefitDetails.put(Event.CHRISTMAS_D_DAY.getName(), 1_200);
-        benefitDetails.put(Event.WEEKDAY.getName(), 4_046);
-        benefitDetails.put(Event.SPECIAL.getName(), 1_000);
-        benefitDetails.put(Event.PRESENT.getName(), 25_000);
+        benefitDetails.put(Discount.CHRISTMAS_D_DAY.getEventName(), 1_200);
+        benefitDetails.put(Discount.WEEKDAY.getEventName(), 4_046);
+        benefitDetails.put(Discount.SPECIAL.getEventName(), 1_000);
+        benefitDetails.put(Gift.CHAMPAGNE.getEventName(), 25_000);
         OutputView.printDetailsOf(benefitDetails);
         assertThat(output()).isEqualTo(
                 "<혜택 내역>" + LINE_SEPARATOR +
