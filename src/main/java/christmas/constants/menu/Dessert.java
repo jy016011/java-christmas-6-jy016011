@@ -3,7 +3,7 @@ package christmas.constants.menu;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Dessert {
+public enum Dessert implements Menu {
     CHOCO_CAKE(15_000, "초코케이크"),
     ICE_CREAM(5_000, "아이스크림");
 
@@ -15,6 +15,10 @@ public enum Dessert {
         this.name = name;
     }
 
+    public static List<Dessert> getDesserts() {
+        return Arrays.stream(Dessert.values()).toList();
+    }
+
     public static int getPriceBy(String name) {
         return Arrays.stream(Dessert.values())
                 .filter(dessert -> dessert.getName().equals(name))
@@ -22,15 +26,13 @@ public enum Dessert {
                 .findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
+    @Override
     public int getPrice() {
         return price;
     }
 
+    @Override
     public String getName() {
         return name;
-    }
-
-    public static List<Dessert> getDesserts() {
-        return Arrays.stream(Dessert.values()).toList();
     }
 }

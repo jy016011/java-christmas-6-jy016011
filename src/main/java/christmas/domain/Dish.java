@@ -1,12 +1,12 @@
 package christmas.domain;
 
 import christmas.constants.Error;
-import christmas.constants.Menu;
+import christmas.constants.MenuBoard;
 import christmas.constants.menu.Appetizer;
 import christmas.constants.menu.Dessert;
 import christmas.constants.menu.Drink;
 import christmas.constants.menu.MainDish;
-import java.util.Arrays;
+import christmas.constants.menu.Menu;
 import java.util.Objects;
 
 public class Dish {
@@ -18,18 +18,18 @@ public class Dish {
         this.name = name;
     }
 
-    public String getType() {
-        return Menu.getBy(name).getType();
+    public Class<? extends Menu> getType() {
+        return MenuBoard.getBy(name).getClass();
     }
 
     public int getPrice() {
-        if (getType().equals(Menu.APPETIZER.getType())) {
+        if (getType() == Appetizer.class) {
             return Appetizer.getPriceBy(name);
         }
-        if (getType().equals(Menu.MAIN_DISH.getType())) {
+        if (getType() == MainDish.class) {
             return MainDish.getPriceBy(name);
         }
-        if (getType().equals(Menu.DESSERT.getType())) {
+        if (getType() == Dessert.class) {
             return Dessert.getPriceBy(name);
         }
         return Drink.getPriceBy(name);
@@ -57,8 +57,8 @@ public class Dish {
     }
 
     private void validate(String name) {
-        boolean isNotInMenu = Arrays.stream(Menu.values())
-                .noneMatch(menu -> menu.getNames().contains(name));
+        boolean isNotInMenu = MenuBoard.getAllMenu().stream()
+                .noneMatch(menu -> menu.getName().equals(name));
         if (isNotInMenu) {
             throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage() + " 메뉴판에 있는 메뉴만 주문하세요.");
         }

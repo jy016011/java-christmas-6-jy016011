@@ -32,14 +32,16 @@ public enum Gift implements Event {
         return menu + String.format(" %d개", count);
     }
 
-    public int getBenefit(int count) {
-        return price * count;
-    }
-
     public String getMenu() {
         return menu;
     }
 
+    @Override
+    public int getBenefit(int count) {
+        return price * count;
+    }
+
+    @Override
     public String getEventName() {
         return eventName;
     }

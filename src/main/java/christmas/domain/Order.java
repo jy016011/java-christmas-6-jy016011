@@ -1,7 +1,9 @@
 package christmas.domain;
 
 import christmas.constants.Error;
-import christmas.constants.Menu;
+import christmas.constants.menu.Dessert;
+import christmas.constants.menu.Drink;
+import christmas.constants.menu.MainDish;
 import christmas.utils.ArgumentValidator;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,8 +18,6 @@ public class Order {
     private final static int NOTHING = 0;
     private final static int MIN_TOTAL = 10_000;
     private final static int EVENT_TOTAL = 120_000;
-    private final static Menu MAIN_DISH = Menu.MAIN_DISH;
-    private final static Menu DESSERT = Menu.DESSERT;
     private final static Error ERROR_HEADER = Error.ERROR_HEADER;
 
     private final HashMap<Dish, Integer> dishes = new LinkedHashMap<>();
@@ -48,7 +48,7 @@ public class Order {
     public int getMainDishCount() {
         int count = NOTHING;
         for (Dish dish : dishes.keySet()) {
-            if (dish.getType().equals(MAIN_DISH.getType())) {
+            if (dish.getType() == MainDish.class) {
                 count += dishes.get(dish);
             }
         }
@@ -58,7 +58,7 @@ public class Order {
     public int getDessertCount() {
         int count = NOTHING;
         for (Dish dish : dishes.keySet()) {
-            if (dish.getType().equals(DESSERT.getType())) {
+            if (dish.getType() == Dessert.class) {
                 count += dishes.get(dish);
             }
         }
@@ -76,7 +76,9 @@ public class Order {
     }
 
     private void validateNotAllDrinks(List<String> dishNames) {
-        boolean isAllDrink = new HashSet<>(Menu.DRINK.getNames()).containsAll(dishNames);
+        boolean isAllDrink = new HashSet<>(Drink.getDrinks().stream()
+                .map(Drink::getName).toList())
+                .containsAll(dishNames);
         if (isAllDrink) {
             throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage() + " 읍료만 주문할 수 없습니다.");
         }

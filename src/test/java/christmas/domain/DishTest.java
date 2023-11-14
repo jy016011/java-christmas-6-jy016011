@@ -3,7 +3,10 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.constants.Menu;
+import christmas.constants.menu.Appetizer;
+import christmas.constants.menu.Dessert;
+import christmas.constants.menu.Drink;
+import christmas.constants.menu.MainDish;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,10 +14,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 public class DishTest {
     private static final String ERROR = "[ERROR]";
-    private static final Menu APPETIZER = Menu.APPETIZER;
-    private static final Menu MAIN_DISH = Menu.MAIN_DISH;
-    private static final Menu DESSERT = Menu.DESSERT;
-    private static final Menu DRINK = Menu.DRINK;
 
     @DisplayName("없는 메뉴일 경우 예외가 발생한다.")
     @Test
@@ -29,7 +28,7 @@ public class DishTest {
     @ParameterizedTest
     void createAppetizer(String input) {
         Dish dish = new Dish(input);
-        assertThat(dish.getType()).isEqualTo(APPETIZER.getType());
+        assertThat(dish.getType()).isEqualTo(Appetizer.class);
     }
 
     @DisplayName("메인 메뉴들이면, 음식 유형이 메인일 것이다.")
@@ -37,7 +36,7 @@ public class DishTest {
     @ParameterizedTest
     void createMainDish(String input) {
         Dish dish = new Dish(input);
-        assertThat(dish.getType()).isEqualTo(MAIN_DISH.getType());
+        assertThat(dish.getType()).isEqualTo(MainDish.class);
     }
 
     @DisplayName("디저트 메뉴들이면, 음식 유형이 디저트일 것이다.")
@@ -45,7 +44,7 @@ public class DishTest {
     @ParameterizedTest
     void createDessert(String input) {
         Dish dish = new Dish(input);
-        assertThat(dish.getType()).isEqualTo(DESSERT.getType());
+        assertThat(dish.getType()).isEqualTo(Dessert.class);
     }
 
     @DisplayName("음료면, 음식 유형이 음료일 것이다.")
@@ -53,7 +52,7 @@ public class DishTest {
     @ParameterizedTest
     void createDrink(String input) {
         Dish dish = new Dish(input);
-        assertThat(dish.getType()).isEqualTo(DRINK.getType());
+        assertThat(dish.getType()).isEqualTo(Drink.class);
     }
 
 }

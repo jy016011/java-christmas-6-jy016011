@@ -23,10 +23,12 @@ public enum Discount implements Event {
         return Arrays.stream(Discount.values()).toList();
     }
 
+    @Override
     public int getBenefit(int additionalCount) {
         return baseDiscount + unitOfChange * additionalCount;
     }
 
+    @Override
     public String getEventName() {
         return eventName;
     }

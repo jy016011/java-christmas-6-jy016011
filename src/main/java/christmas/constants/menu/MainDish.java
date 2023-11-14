@@ -3,7 +3,7 @@ package christmas.constants.menu;
 import java.util.Arrays;
 import java.util.List;
 
-public enum MainDish {
+public enum MainDish implements Menu {
     T_BONE_STEAK(55_000, "티본스테이크"),
     BARBECUE_RIBS(54_000, "바비큐립"),
     SEAFOOD_PASTA(35_000, "해산물파스타"),
@@ -17,6 +17,10 @@ public enum MainDish {
         this.name = name;
     }
 
+    public static List<MainDish> getMainDishes() {
+        return Arrays.stream(MainDish.values()).toList();
+    }
+
     public static int getPriceBy(String name) {
         return Arrays.stream(MainDish.values())
                 .filter(mainDish -> mainDish.getName().equals(name))
@@ -24,15 +28,13 @@ public enum MainDish {
                 .findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
+    @Override
     public int getPrice() {
         return price;
     }
 
+    @Override
     public String getName() {
         return name;
-    }
-
-    public static List<MainDish> getMainDishes() {
-        return Arrays.stream(MainDish.values()).toList();
     }
 }

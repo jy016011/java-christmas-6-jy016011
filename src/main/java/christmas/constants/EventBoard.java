@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class EventHandler {
+public class EventBoard {
     public static List<Event> getAllEvent() {
         return Stream.of(Discount.getDiscounts(), Gift.getGifts())
                 .flatMap(Collection::stream).collect(Collectors.toList());

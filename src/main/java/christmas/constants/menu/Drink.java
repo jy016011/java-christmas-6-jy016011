@@ -3,7 +3,7 @@ package christmas.constants.menu;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Drink {
+public enum Drink implements Menu {
     ZERO_COKE(3_000, "제로콜라"),
     RED_WINE(60_000, "레드와인"),
     CHAMPAGNE(25_000, "샴페인");
@@ -16,6 +16,10 @@ public enum Drink {
         this.name = name;
     }
 
+    public static List<Drink> getDrinks() {
+        return Arrays.stream(Drink.values()).toList();
+    }
+
     public static int getPriceBy(String name) {
         return Arrays.stream(Drink.values())
                 .filter(drink -> drink.getName().equals(name))
@@ -23,15 +27,13 @@ public enum Drink {
                 .findFirst().orElseThrow(IllegalArgumentException::new);
     }
 
+    @Override
     public int getPrice() {
         return price;
     }
 
+    @Override
     public String getName() {
         return name;
-    }
-
-    public static List<Drink> getDrinks() {
-        return Arrays.stream(Drink.values()).toList();
     }
 }
