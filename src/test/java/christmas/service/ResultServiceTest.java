@@ -41,7 +41,7 @@ public class ResultServiceTest {
     @DisplayName("12월 3일에 실행 에시와 같이 주문하면, "
             + "할인 전 총금액은 142,000원 일 것이고,"
             + "총 혜택 금액은 31,246원일 것이고,"
-            + "따라서 할인된 총금액은 135,754원 일 것이다.")
+            + "할인된 총금액은 135,754원 일 것이다.")
     @Test
     void getTotalPriceByThisOrder() {
         ResultService resultService = new ResultService();

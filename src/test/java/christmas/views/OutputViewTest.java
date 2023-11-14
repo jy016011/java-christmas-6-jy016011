@@ -102,6 +102,7 @@ public class OutputViewTest {
         );
     }
 
+    @DisplayName("받은 혜택이 없을 경우의 혜택 내역 출력")
     @Test
     void testPrintingBenefitsNone() {
         Map<String, Integer> benefitDetails = new LinkedHashMap<>();
@@ -136,6 +137,7 @@ public class OutputViewTest {
         assertThat(output()).isEqualTo("<12월 이벤트 배지>" + LINE_SEPARATOR + "산타");
     }
 
+    @DisplayName("받은 배지가 없을 경우의 12월 이벤트 배지 출력")
     @Test
     void testPrintingNoneBadge() {
         Badge badge = Badge.NONE;

@@ -30,14 +30,14 @@ public class ErrorViewTest {
         return captor.toString().trim();
     }
 
-    @DisplayName("올바른 날짜 입력이 아닐 경우 예외 출력")
+    @DisplayName("올바르지 않은 날짜 입력에 대한 예외 메시지 출력")
     @Test
     void testPrintInvalidDayInputMessage() {
         ErrorView.printInvalidDayInput();
         assertThat(output()).isEqualTo("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
     }
 
-    @DisplayName("올바른 주문 입력이 아닐 경우 예외 출력")
+    @DisplayName("올바르지 않은 주문 입력에 대한 예외 출력")
     @Test
     void testPrintInvalidOrderInputMessage() {
         ErrorView.printInvalidOrderInput();

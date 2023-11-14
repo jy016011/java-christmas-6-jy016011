@@ -31,24 +31,24 @@ public class DishTest {
     @ValueSource(strings = {"티본스테이크", "바비큐립", "해산물파스타", "크리스마스파스타"})
     @ParameterizedTest
     void createMainDish(String input) {
-        Dish whiteMushroomSoup = new Dish(input);
-        assertThat(whiteMushroomSoup.getType()).isEqualTo("메인");
+        Dish dish = new Dish(input);
+        assertThat(dish.getType()).isEqualTo("메인");
     }
 
     @DisplayName("디저트 메뉴들이면, 음식 유형이 디저트일 것이다.")
     @ValueSource(strings = {"초코케이크", "아이스크림"})
     @ParameterizedTest
     void createDessert(String input) {
-        Dish whiteMushroomSoup = new Dish(input);
-        assertThat(whiteMushroomSoup.getType()).isEqualTo("디저트");
+        Dish dish = new Dish(input);
+        assertThat(dish.getType()).isEqualTo("디저트");
     }
 
     @DisplayName("음료면, 음식 유형이 음료일 것이다.")
     @ValueSource(strings = {"제로콜라", "레드와인", "샴페인"})
     @ParameterizedTest
     void createDrink(String input) {
-        Dish whiteMushroomSoup = new Dish(input);
-        assertThat(whiteMushroomSoup.getType()).isEqualTo("음료");
+        Dish dish = new Dish(input);
+        assertThat(dish.getType()).isEqualTo("음료");
     }
 
 }

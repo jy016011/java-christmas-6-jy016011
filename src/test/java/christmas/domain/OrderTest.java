@@ -60,7 +60,7 @@ public class OrderTest {
         assertThat(order.getTotalPrice()).isEqualTo(80_000);
     }
 
-    @DisplayName("초코케이크 2개를 시키면 주문 내용을 초코케이크 : 2개와 같이 저장할 것이다.")
+    @DisplayName("초코케이크 2개를 시키면 주문 내용을 초코케이크 = 2개와 같이 저장할 것이다.")
     @Test
     void checkOrderDetails() {
         List<String> dishNames = new ArrayList<>(List.of("초코케이크"));

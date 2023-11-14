@@ -47,8 +47,8 @@ public class OutputView {
         }
         for (String event : allBenefits.keySet()) {
             int benefit = allBenefits.get(event);
-            readableFormatOfBenefits.append(event).append(": ")
-                    .append("-").append(String.format("%,d원", benefit)).append(LINE_SEPARATOR);
+            readableFormatOfBenefits.append(event).append(String.format(": -%,d원", benefit))
+                    .append(LINE_SEPARATOR);
         }
         System.out.println(readableFormatOfBenefits);
     }
