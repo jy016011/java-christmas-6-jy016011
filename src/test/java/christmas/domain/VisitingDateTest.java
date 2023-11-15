@@ -3,7 +3,6 @@ package christmas.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import christmas.utils.StringChanger;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,8 +13,7 @@ public class VisitingDateTest {
     @ValueSource(strings = {"0", "32"})
     @ParameterizedTest
     void crateVisitingDateByOverRange(String userInput) {
-        int day = StringChanger.toInteger(userInput);
-        assertThatThrownBy(() -> new VisitingDate(day))
+        assertThatThrownBy(() -> new VisitingDate(userInput))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -27,8 +25,7 @@ public class VisitingDateTest {
     })
     @ParameterizedTest
     void visitChristmasDDays(String userInput) {
-        int day = StringChanger.toInteger(userInput);
-        VisitingDate visitingDate = new VisitingDate(day);
+        VisitingDate visitingDate = new VisitingDate(userInput);
         assertThat(visitingDate.isChristmasDDay()).isEqualTo(true);
     }
 
@@ -36,8 +33,7 @@ public class VisitingDateTest {
     @ValueSource(strings = {"26", "27", "28", "29", "30", "31"})
     @ParameterizedTest
     void visitNotChristmasDDays(String userInput) {
-        int day = StringChanger.toInteger(userInput);
-        VisitingDate visitingDate = new VisitingDate(day);
+        VisitingDate visitingDate = new VisitingDate(userInput);
         assertThat(visitingDate.isChristmasDDay()).isEqualTo(false);
     }
 
@@ -50,8 +46,7 @@ public class VisitingDateTest {
     })
     @ParameterizedTest
     void visitWeekDays(String userInput) {
-        int day = StringChanger.toInteger(userInput);
-        VisitingDate visitingDate = new VisitingDate(day);
+        VisitingDate visitingDate = new VisitingDate(userInput);
         assertThat(visitingDate.isWeekday()).isEqualTo(true);
         assertThat(visitingDate.isWeekend()).isEqualTo(false);
     }
@@ -63,8 +58,7 @@ public class VisitingDateTest {
     })
     @ParameterizedTest
     void visitWeekend(String userInput) {
-        int day = StringChanger.toInteger(userInput);
-        VisitingDate visitingDate = new VisitingDate(day);
+        VisitingDate visitingDate = new VisitingDate(userInput);
         assertThat(visitingDate.isWeekend()).isEqualTo(true);
         assertThat(visitingDate.isWeekday()).isEqualTo(false);
     }
@@ -73,8 +67,7 @@ public class VisitingDateTest {
     @ValueSource(strings = {"3", "10", "17", "24", "25", "31"})
     @ParameterizedTest
     void visitSpecialDays(String userInput) {
-        int day = StringChanger.toInteger(userInput);
-        VisitingDate visitingDate = new VisitingDate(day);
+        VisitingDate visitingDate = new VisitingDate(userInput);
         assertThat(visitingDate.isSpecialDay()).isEqualTo(true);
     }
 
@@ -87,15 +80,14 @@ public class VisitingDateTest {
     })
     @ParameterizedTest
     void visitNotSpecialDays(String userInput) {
-        int day = StringChanger.toInteger(userInput);
-        VisitingDate visitingDate = new VisitingDate(day);
+        VisitingDate visitingDate = new VisitingDate(userInput);
         assertThat(visitingDate.isSpecialDay()).isEqualTo(false);
     }
 
     @DisplayName("12월 3일은 크리스마스 디데이이자 특별 할인이 있는 날이고, 평일이다.")
     @Test
     void createVisitingDateByThirdOfMonth() {
-        VisitingDate visitingDate = new VisitingDate(3);
+        VisitingDate visitingDate = new VisitingDate("3");
         assertThat(visitingDate.isChristmasDDay()).isEqualTo(true);
         assertThat(visitingDate.isSpecialDay()).isEqualTo(true);
         assertThat(visitingDate.isWeekday()).isEqualTo(true);
@@ -105,7 +97,7 @@ public class VisitingDateTest {
     @DisplayName("12월 30일은 크리스마스 디데이가 아니고, 특별 할인이 없는 날이고, 주말이다.")
     @Test
     void createVisitingDateByTwentyThirdOfMonth() {
-        VisitingDate visitingDate = new VisitingDate(30);
+        VisitingDate visitingDate = new VisitingDate("30");
         assertThat(visitingDate.isChristmasDDay()).isEqualTo(false);
         assertThat(visitingDate.isSpecialDay()).isEqualTo(false);
         assertThat(visitingDate.isWeekday()).isEqualTo(false);

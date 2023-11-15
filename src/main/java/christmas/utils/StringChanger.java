@@ -19,6 +19,7 @@ public class StringChanger {
     }
 
     public static int toInteger(String input) {
+        ArgumentValidator.isNumber(input);
         return Integer.parseInt(input);
     }
 

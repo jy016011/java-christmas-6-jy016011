@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.utils.ArgumentValidator;
+import christmas.utils.StringChanger;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -20,7 +21,8 @@ public class VisitingDate {
 
     private final LocalDate localDate;
 
-    public VisitingDate(int day) {
+    public VisitingDate(String userInput) {
+        int day = StringChanger.toInteger(userInput);
         validate(day);
         localDate = LocalDate.of(YEAR, MONTH, day);
     }

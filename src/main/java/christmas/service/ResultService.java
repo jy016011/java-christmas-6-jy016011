@@ -9,23 +9,11 @@ import christmas.domain.Benefits;
 import christmas.domain.Dish;
 import christmas.domain.Order;
 import christmas.domain.VisitingDate;
-import christmas.utils.ArgumentValidator;
-import christmas.utils.StringChanger;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ResultService {
-    private final static String DISH_SEPARATOR = ",";
-    private final static String DISH_NAME_AND_COUNT_SEPARATOR = "-";
-
     private final static int NOTHING = 0;
-    private final static int VALID_SIZE = 2;
-    private final static int VALID_DIFFERENCE = 1;
-
-    private final static int DISH_NAME = 0;
-    private final static int DISH_COUNT = 1;
     private final static int GIFT_COUNT = 1;
     private static final int FIRST_DAY = 1;
 
@@ -34,8 +22,7 @@ public class ResultService {
     private Order order;
 
     public void setDate(String userInput) {
-        int day = toNumber(userInput);
-        visitingDate = new VisitingDate(day);
+        visitingDate = new VisitingDate(userInput);
     }
 
     public int getDate() {
@@ -43,12 +30,7 @@ public class ResultService {
     }
 
     public void setOrder(String userInput) {
-        List<String> dishNames = new ArrayList<>();
-        List<Integer> dishCounts = new ArrayList<>();
-        validateFormat(userInput);
-        List<String> orderInput = StringChanger.toTrimmedStringList(userInput, DISH_SEPARATOR);
-        separateNameAndCount(orderInput, dishNames, dishCounts);
-        order = new Order(dishNames, dishCounts);
+        order = new Order(userInput);
     }
 
     public Map<Dish, Integer> getUserOrder() {
@@ -117,34 +99,5 @@ public class ResultService {
             return benefits.getSpecialDiscount(order, visitingDate);
         }
         return benefits.getGiftBenefit(order);
-    }
-
-    private void validateFormat(String userInput) {
-        int dishSeparatorCount = (int) userInput.chars()
-                .filter(c -> c == StringChanger.toChar(DISH_SEPARATOR)).count();
-        int dishNameAndCountSeparatorCount = (int) userInput.chars()
-                .filter(c -> c == StringChanger.toChar(DISH_NAME_AND_COUNT_SEPARATOR)).count();
-        ArgumentValidator.isEqual(
-                dishSeparatorCount,
-                dishNameAndCountSeparatorCount - VALID_DIFFERENCE
-        );
-    }
-
-    private void separateNameAndCount(List<String> orderInput, List<String> dishNames, List<Integer> dishCounts) {
-        for (String eachOrder : orderInput) {
-            List<String> dishNameAndCount = StringChanger.toTrimmedStringList(eachOrder, DISH_NAME_AND_COUNT_SEPARATOR);
-            validateIsSeparated(dishNameAndCount);
-            dishNames.add(dishNameAndCount.get(DISH_NAME));
-            dishCounts.add(toNumber(dishNameAndCount.get(DISH_COUNT)));
-        }
-    }
-
-    private void validateIsSeparated(List<String> dishNameAndCount) {
-        ArgumentValidator.isEqual(dishNameAndCount.size(), VALID_SIZE);
-    }
-
-    private int toNumber(String userInput) {
-        ArgumentValidator.isNumber(userInput);
-        return StringChanger.toInteger(userInput);
     }
 }
