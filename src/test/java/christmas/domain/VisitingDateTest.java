@@ -9,6 +9,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 public class VisitingDateTest {
+    @DisplayName("입력한 날짜가 0이상의 정수가 아니면 예외가 발생할 것이다.")
+    @ValueSource(strings = {"a", "1.2", "-1"})
+    @ParameterizedTest
+    void createDateByInvalidInput(String userInput) {
+        assertThatThrownBy(() -> new VisitingDate(userInput))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("입력한 날이 1미만 혹은 31초과면 예외가 발생할 것이다.")
     @ValueSource(strings = {"0", "32"})
     @ParameterizedTest
