@@ -52,7 +52,7 @@ public class ResultServiceTest {
         assertThat(allBenefits.get(Discount.WEEKDAY.getContentName())).isEqualTo(4_046);
         assertThat(allBenefits.get(Discount.SPECIAL.getContentName())).isEqualTo(1_000);
         assertThat(allBenefits.get(Gift.CHAMPAGNE.getContentName())).isEqualTo(25_000);
-        assertThat(allBenefits.containsKey("주말 할인")).isEqualTo(false);
+        assertThat(allBenefits.containsKey(Discount.WEEKEND.getContentName())).isEqualTo(false);
     }
 
     @DisplayName("배지는 산타일 것이다.")
