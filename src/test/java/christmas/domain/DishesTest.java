@@ -24,7 +24,7 @@ public class DishesTest {
             "메뉴가 중복되거나,"
                     + "음료만 주문하거나,"
                     + "각 메뉴의 개수가 하나라도 1개 미만이거나,"
-                    + "메뉴의 총 개수가 20개면 예외가 발생할 것이다."
+                    + "메뉴의 총 개수가 20개 초과면 예외가 발생할 것이다."
     )
     @ValueSource(strings = {
             "양송이수프-1,양송이수프-2",
@@ -42,7 +42,7 @@ public class DishesTest {
                 .hasMessageContaining(ERROR_HEADER.getMessage());
     }
 
-    @DisplayName("티본스테이크와 샴페인을 하나씩 시키면 할인전 총금액은 80,000원일 것이다.")
+    @DisplayName("티본스테이크와 샴페인을 하나씩 시키면 할인 전 총금액은 80,000원일 것이다.")
     @Test
     void orderTBoneSteakAndChampagne() {
         List<String> dishNames = new ArrayList<>();
