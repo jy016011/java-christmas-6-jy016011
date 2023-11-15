@@ -11,15 +11,15 @@ public enum Discount implements Event {
 
     private final int baseDiscount;
     private final int unitOfChange;
-    private final String eventName;
+    private final String contentName;
 
-    Discount(int baseDiscount, int unitOfChange, String eventName) {
+    Discount(int baseDiscount, int unitOfChange, String contentName) {
         this.baseDiscount = baseDiscount;
         this.unitOfChange = unitOfChange;
-        this.eventName = eventName;
+        this.contentName = contentName;
     }
 
-    public static List<Discount> getDiscounts() {
+    public static List<Discount> getAll() {
         return Arrays.stream(Discount.values()).toList();
     }
 
@@ -29,7 +29,7 @@ public enum Discount implements Event {
     }
 
     @Override
-    public String getEventName() {
-        return eventName;
+    public String getContentName() {
+        return contentName;
     }
 }

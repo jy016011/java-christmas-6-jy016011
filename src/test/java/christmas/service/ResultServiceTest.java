@@ -48,10 +48,10 @@ public class ResultServiceTest {
     @Test
     void getSynthesizedAllBenefits() {
         Map<String, Integer> allBenefits = resultService.getSynthesizedAllBenefits();
-        assertThat(allBenefits.get(Discount.CHRISTMAS_D_DAY.getEventName())).isEqualTo(1_200);
-        assertThat(allBenefits.get(Discount.WEEKDAY.getEventName())).isEqualTo(4_046);
-        assertThat(allBenefits.get(Discount.SPECIAL.getEventName())).isEqualTo(1_000);
-        assertThat(allBenefits.get(Gift.CHAMPAGNE.getEventName())).isEqualTo(25_000);
+        assertThat(allBenefits.get(Discount.CHRISTMAS_D_DAY.getContentName())).isEqualTo(1_200);
+        assertThat(allBenefits.get(Discount.WEEKDAY.getContentName())).isEqualTo(4_046);
+        assertThat(allBenefits.get(Discount.SPECIAL.getContentName())).isEqualTo(1_000);
+        assertThat(allBenefits.get(Gift.CHAMPAGNE.getContentName())).isEqualTo(25_000);
         assertThat(allBenefits.containsKey("주말 할인")).isEqualTo(false);
     }
 

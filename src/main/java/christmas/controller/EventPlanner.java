@@ -62,10 +62,10 @@ public class EventPlanner {
 
     private void printAllBenefits() {
         resultService.setBenefits();
-        OutputView.printPresent(resultService.getGiftWithCount());
+        OutputView.printGiftItem(resultService.getGiftWithCount());
         OutputView.printDetailsOf(resultService.getSynthesizedAllBenefits());
         OutputView.printTheSumOf(resultService.getTotalBenefit());
-        OutputView.printExpected(resultService.getTotalDiscountedPrice());
+        OutputView.printExpectedPrice(resultService.getTotalDiscountedPrice());
     }
 
     private void printBadge() {

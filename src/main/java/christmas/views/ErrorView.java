@@ -11,10 +11,10 @@ public class ErrorView {
     }
 
     public static void printInvalidDayInput() {
-        System.out.println(LINE_SEPARATOR + INVALID_DAY.getErrorMessage() + LINE_SEPARATOR);
+        System.out.println(LINE_SEPARATOR + INVALID_DAY.getMessage() + LINE_SEPARATOR);
     }
 
     public static void printInvalidOrderInput() {
-        System.out.println(LINE_SEPARATOR + INVALID_ORDER.getErrorMessage() + LINE_SEPARATOR);
+        System.out.println(LINE_SEPARATOR + INVALID_ORDER.getMessage() + LINE_SEPARATOR);
     }
 }

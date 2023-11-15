@@ -18,7 +18,7 @@ public enum Gift implements Event {
         this.eventName = eventName;
     }
 
-    public static List<Gift> getGifts() {
+    public static List<Gift> getAll() {
         return Arrays.stream(Gift.values()).filter(gift -> gift != NONE).toList();
     }
 
@@ -36,7 +36,7 @@ public enum Gift implements Event {
     }
 
     @Override
-    public String getEventName() {
+    public String getContentName() {
         return eventName;
     }
 }

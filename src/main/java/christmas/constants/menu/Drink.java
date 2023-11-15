@@ -16,7 +16,7 @@ public enum Drink implements Menu {
         this.name = name;
     }
 
-    public static List<Drink> getDrinks() {
+    public static List<Drink> getAll() {
         return Arrays.stream(Drink.values()).toList();
     }
 

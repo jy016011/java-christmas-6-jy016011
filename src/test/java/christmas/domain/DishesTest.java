@@ -39,7 +39,7 @@ public class DishesTest {
         changeFormat(userInput, dishNames, dishCounts);
         assertThatThrownBy(() -> new Dishes(dishNames, dishCounts))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_HEADER.getErrorMessage());
+                .hasMessageContaining(ERROR_HEADER.getMessage());
     }
 
     @DisplayName("티본스테이크와 샴페인을 하나씩 시키면 할인전 총금액은 80,000원일 것이다.")
@@ -59,7 +59,7 @@ public class DishesTest {
         List<Integer> dishCounts = new ArrayList<>();
         changeFormat("초코케이크-2", dishNames, dishCounts);
         Dishes dishes = new Dishes(dishNames, dishCounts);
-        assertThat(dishes.getOrderedDishes().get(new Dish("초코케이크"))).isEqualTo(2);
+        assertThat(dishes.getOrderDetails().get(new Dish("초코케이크"))).isEqualTo(2);
     }
 
     private void changeFormat(String userInput, List<String> dishNames, List<Integer> dishCounts) {

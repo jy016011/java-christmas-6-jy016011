@@ -16,7 +16,7 @@ public enum Appetizer implements Menu {
         this.name = name;
     }
 
-    public static List<Appetizer> getAppetizers() {
+    public static List<Appetizer> getAll() {
         return Arrays.stream(Appetizer.values()).toList();
     }
 

@@ -26,7 +26,7 @@ public class OrderTest {
     void createOrderByInvalidFormInput(String userInput) {
         assertThatThrownBy(() -> new Order(userInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ERROR_HEADER.getErrorMessage());
+                .hasMessageContaining(ERROR_HEADER.getMessage());
     }
 
     @DisplayName("할인 전 총 주문 금액이 만원 미만이면 이벤트 대상이 아닐 것이다.")

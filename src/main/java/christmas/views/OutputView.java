@@ -36,7 +36,7 @@ public class OutputView {
                 + String.format("%,d원", totalPrice));
     }
 
-    public static void printPresent(String gift) {
+    public static void printGiftItem(String gift) {
         System.out.println(LINE_SEPARATOR + "<증정 메뉴>" + LINE_SEPARATOR + gift);
     }
 
@@ -62,7 +62,7 @@ public class OutputView {
         System.out.println(outputOfTotalBenefits);
     }
 
-    public static void printExpected(int priceToPay) {
+    public static void printExpectedPrice(int priceToPay) {
         System.out.println(
                 LINE_SEPARATOR + "<할인 후 예상 결제 금액>" + LINE_SEPARATOR + String.format("%,d원", priceToPay)
         );

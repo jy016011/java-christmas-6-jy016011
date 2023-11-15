@@ -34,7 +34,7 @@ public class ResultService {
     }
 
     public Map<Dish, Integer> getUserOrder() {
-        return order.getOrderedDishes();
+        return order.getDishes();
     }
 
     public void setBenefits() {
@@ -58,15 +58,15 @@ public class ResultService {
     }
 
     public int getTotalBenefit() {
-        return getTotalDiscount() + benefits.getGiftBenefit(order);
+        return getTotalDiscount() + benefits.getGiftPrice(order);
     }
 
     public Map<String, Integer> getSynthesizedAllBenefits() {
         Map<String, Integer> benefitsDetails = new LinkedHashMap<>();
-        for (Event event : EventBoard.getAllEvent()) {
+        for (Event event : EventBoard.getAllContents()) {
             int benefit = getBenefitBy(event);
             if (benefit > NOTHING) {
-                benefitsDetails.put(event.getEventName(), benefit);
+                benefitsDetails.put(event.getContentName(), benefit);
             }
         }
         return benefitsDetails;
@@ -98,6 +98,6 @@ public class ResultService {
         if (event == Discount.SPECIAL) {
             return benefits.getSpecialDiscount(order, visitingDate);
         }
-        return benefits.getGiftBenefit(order);
+        return benefits.getGiftPrice(order);
     }
 }

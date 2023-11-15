@@ -4,7 +4,7 @@ import christmas.constants.Error;
 import java.util.List;
 
 public class ArgumentValidator {
-    private static final String ERROR_MESSAGE_HEADER = Error.ERROR_HEADER.getErrorMessage();
+    private static final String ERROR_MESSAGE_HEADER = Error.ERROR_HEADER.getMessage();
 
     private ArgumentValidator() {
     }

@@ -25,7 +25,7 @@ public class Dishes {
         setOrderDetails(dishNames, dishCounts);
     }
 
-    public Map<Dish, Integer> getOrderedDishes() {
+    public Map<Dish, Integer> getOrderDetails() {
         return Collections.unmodifiableMap(orderDetails);
     }
 
@@ -86,11 +86,11 @@ public class Dishes {
     }
 
     private void validateNotAllDrinks(List<String> dishNames) {
-        boolean isAllDrink = new HashSet<>(Drink.getDrinks().stream()
+        boolean isAllDrink = new HashSet<>(Drink.getAll().stream()
                 .map(Drink::getName).toList())
                 .containsAll(dishNames);
         if (isAllDrink) {
-            throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage() + " 읍료만 주문할 수 없습니다.");
+            throw new IllegalArgumentException(ERROR_HEADER.getMessage() + " 읍료만 주문할 수 없습니다.");
         }
     }
 }

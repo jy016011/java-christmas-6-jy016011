@@ -15,7 +15,7 @@ public enum Dessert implements Menu {
         this.name = name;
     }
 
-    public static List<Dessert> getDesserts() {
+    public static List<Dessert> getAll() {
         return Arrays.stream(Dessert.values()).toList();
     }
 

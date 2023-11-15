@@ -16,7 +16,7 @@ public class BenefitsTest {
         Order order = new Order("티본스테이크-2");
         Benefits benefits = new Benefits();
         assertThat(benefits.getGift(order)).isEqualTo(Gift.NONE);
-        assertThat(benefits.getGiftBenefit(order)).isEqualTo(NOTHING);
+        assertThat(benefits.getGiftPrice(order)).isEqualTo(NOTHING);
     }
 
     @DisplayName("12만원 이상이면, 증정 메뉴를 받을 수 있다.")
@@ -25,7 +25,7 @@ public class BenefitsTest {
         Order order = new Order("티본스테이크-2,아이스크림-2");
         Benefits benefits = new Benefits();
         assertThat(benefits.getGift(order)).isEqualTo(Gift.CHAMPAGNE);
-        assertThat(benefits.getGiftBenefit(order)).isEqualTo(Gift.CHAMPAGNE.getBenefit(GIFT_COUNT));
+        assertThat(benefits.getGiftPrice(order)).isEqualTo(Gift.CHAMPAGNE.getBenefit(GIFT_COUNT));
     }
 
     @DisplayName("12월 3일에 실행 에시와 같이 주문하면,"
@@ -43,6 +43,6 @@ public class BenefitsTest {
         assertThat(benefits.getWeekdayDiscount(order, visitingDate)).isEqualTo(4_046);
         assertThat(benefits.getWeekendDiscount(order, visitingDate)).isEqualTo(NOTHING);
         assertThat(benefits.getSpecialDiscount(order, visitingDate)).isEqualTo(1_000);
-        assertThat(benefits.getGiftBenefit(order)).isEqualTo(Gift.CHAMPAGNE.getBenefit(GIFT_COUNT));
+        assertThat(benefits.getGiftPrice(order)).isEqualTo(Gift.CHAMPAGNE.getBenefit(GIFT_COUNT));
     }
 }

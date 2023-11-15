@@ -27,8 +27,8 @@ public class Order {
         totalPrice = setTotalPrice();
     }
 
-    public Map<Dish, Integer> getOrderedDishes() {
-        return dishes.getOrderedDishes();
+    public Map<Dish, Integer> getDishes() {
+        return dishes.getOrderDetails();
     }
 
     public int getTotalPrice() {
@@ -61,7 +61,6 @@ public class Order {
     private int setTotalPrice() {
         return dishes.getTotalPrice();
     }
-
 
     private void changeFormat(String userInput, List<String> dishNames, List<Integer> dishCounts) {
         List<String> orderInput = StringChanger.toTrimmedStringList(userInput, DISH_SEPARATOR);

@@ -44,10 +44,10 @@ public class Dish {
     }
 
     private void validate(String name) {
-        boolean isNotInMenu = MenuBoard.getAllMenu().stream()
+        boolean isNotInMenu = MenuBoard.getAll().stream()
                 .noneMatch(menu -> menu.getName().equals(name));
         if (isNotInMenu) {
-            throw new IllegalArgumentException(ERROR_HEADER.getErrorMessage() + " 메뉴판에 있는 메뉴만 주문하세요.");
+            throw new IllegalArgumentException(ERROR_HEADER.getMessage() + " 메뉴판에 있는 메뉴만 주문하세요.");
         }
     }
 }

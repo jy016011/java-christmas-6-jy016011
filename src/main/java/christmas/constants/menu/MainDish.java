@@ -17,10 +17,10 @@ public enum MainDish implements Menu {
         this.name = name;
     }
 
-    public static List<MainDish> getMainDishes() {
+    public static List<MainDish> getAll() {
         return Arrays.stream(MainDish.values()).toList();
     }
-    
+
     @Override
     public int getPrice() {
         return price;

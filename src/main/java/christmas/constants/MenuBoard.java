@@ -12,13 +12,13 @@ import java.util.stream.Stream;
 
 public class MenuBoard {
 
-    public static List<Menu> getAllMenu() {
-        return Stream.of(Appetizer.getAppetizers(), Dessert.getDesserts(), Drink.getDrinks(), MainDish.getMainDishes())
+    public static List<Menu> getAll() {
+        return Stream.of(Appetizer.getAll(), Dessert.getAll(), Drink.getAll(), MainDish.getAll())
                 .flatMap(Collection::stream).collect(Collectors.toList());
     }
 
     public static Menu getBy(String name) {
-        return getAllMenu().stream().filter(menu -> menu.getName().equals(name)).findFirst()
+        return getAll().stream().filter(menu -> menu.getName().equals(name)).findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 }

@@ -76,13 +76,13 @@ public class OutputViewTest {
     @DisplayName("증정 메뉴 출력")
     @Test
     void testPrintingPresentEventWithGift() {
-        OutputView.printPresent(Gift.CHAMPAGNE.getItemBy(GIFT_COUNT));
+        OutputView.printGiftItem(Gift.CHAMPAGNE.getItemBy(GIFT_COUNT));
         assertThat(output()).isEqualTo("<증정 메뉴>" + LINE_SEPARATOR + "샴페인 1개");
     }
 
     @Test
     void testPrintingPresentEventWithOutGift() {
-        OutputView.printPresent(NONE);
+        OutputView.printGiftItem(NONE);
         assertThat(output()).isEqualTo("<증정 메뉴>" + LINE_SEPARATOR + "없음");
     }
 
@@ -90,10 +90,10 @@ public class OutputViewTest {
     @Test
     void testPrintingBenefitsDetails() {
         Map<String, Integer> benefitDetails = new LinkedHashMap<>();
-        benefitDetails.put(Discount.CHRISTMAS_D_DAY.getEventName(), 1_200);
-        benefitDetails.put(Discount.WEEKDAY.getEventName(), 4_046);
-        benefitDetails.put(Discount.SPECIAL.getEventName(), 1_000);
-        benefitDetails.put(Gift.CHAMPAGNE.getEventName(), 25_000);
+        benefitDetails.put(Discount.CHRISTMAS_D_DAY.getContentName(), 1_200);
+        benefitDetails.put(Discount.WEEKDAY.getContentName(), 4_046);
+        benefitDetails.put(Discount.SPECIAL.getContentName(), 1_000);
+        benefitDetails.put(Gift.CHAMPAGNE.getContentName(), 25_000);
         OutputView.printDetailsOf(benefitDetails);
         assertThat(output()).isEqualTo(
                 "<혜택 내역>" + LINE_SEPARATOR +
@@ -127,7 +127,7 @@ public class OutputViewTest {
     @Test
     void testPrintingExpectedPriceToPay() {
         int priceToPay = 135_754;
-        OutputView.printExpected(priceToPay);
+        OutputView.printExpectedPrice(priceToPay);
         assertThat(output()).isEqualTo("<할인 후 예상 결제 금액>" + LINE_SEPARATOR + "135,754원");
     }
 

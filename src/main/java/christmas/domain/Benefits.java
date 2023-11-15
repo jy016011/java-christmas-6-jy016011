@@ -49,7 +49,7 @@ public class Benefits {
         return discount;
     }
 
-    public int getGiftBenefit(Order order) {
+    public int getGiftPrice(Order order) {
         int benefit = NOTHING;
         Gift gift = getGift(order);
         if (gift == Gift.CHAMPAGNE) {
