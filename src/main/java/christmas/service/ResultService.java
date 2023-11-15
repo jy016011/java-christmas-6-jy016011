@@ -5,7 +5,7 @@ import christmas.constants.EventBoard;
 import christmas.constants.event.Discount;
 import christmas.constants.event.Event;
 import christmas.constants.event.Gift;
-import christmas.constants.menu.Drink;
+import christmas.domain.Benefits;
 import christmas.domain.Dish;
 import christmas.domain.Order;
 import christmas.domain.VisitingDate;
@@ -20,21 +20,18 @@ public class ResultService {
     private final static String DISH_SEPARATOR = ",";
     private final static String DISH_NAME_AND_COUNT_SEPARATOR = "-";
 
-    private final static String NONE = "없음";
     private final static int NOTHING = 0;
-
     private final static int VALID_SIZE = 2;
     private final static int VALID_DIFFERENCE = 1;
 
     private final static int DISH_NAME = 0;
     private final static int DISH_COUNT = 1;
-    private final static int FIRST_DAY = 1;
-
     private final static int GIFT_COUNT = 1;
-    private final static Drink GIFT = Drink.CHAMPAGNE;
+    private static final int FIRST_DAY = 1;
 
-    private Order order;
+    private Benefits benefits;
     private VisitingDate visitingDate;
+    private Order order;
 
     public void setDate(String userInput) {
         int day = toNumber(userInput);
@@ -58,16 +55,20 @@ public class ResultService {
         return order.getOrderedDishes();
     }
 
+    public void setBenefits() {
+        benefits = new Benefits();
+    }
+
     public int getTotalPrice() {
         return order.getTotalPrice();
     }
 
-    public String getGift() {
-        if (order.isEventTarget() && order.canGetGift()) {
-            Gift gift = Gift.getBy(GIFT.getName());
-            return gift.getItemBy(GIFT_COUNT);
+    public String getGiftWithCount() {
+        Gift gift = benefits.getGift(order);
+        if (gift == Gift.NONE) {
+            return gift.getMenu();
         }
-        return NONE;
+        return gift.getItemBy(GIFT_COUNT);
     }
 
     public int getTotalDiscountedPrice() {
@@ -75,7 +76,7 @@ public class ResultService {
     }
 
     public int getTotalBenefit() {
-        return getTotalDiscount() + getGiftBenefit();
+        return getTotalDiscount() + benefits.getGiftBenefit(order);
     }
 
     public Map<String, Integer> getSynthesizedAllBenefits() {
@@ -95,71 +96,27 @@ public class ResultService {
 
     private int getTotalDiscount() {
         int totalDiscount = NOTHING;
-        totalDiscount += getChristmasDDayDiscount();
-        totalDiscount += getWeekdayDiscount();
-        totalDiscount += getWeekendDiscount();
-        totalDiscount += getSpecialDiscount();
+        totalDiscount += benefits.getChristmasDDayDiscount(order, visitingDate);
+        totalDiscount += benefits.getWeekdayDiscount(order, visitingDate);
+        totalDiscount += benefits.getWeekendDiscount(order, visitingDate);
+        totalDiscount += benefits.getSpecialDiscount(order, visitingDate);
         return totalDiscount;
     }
 
     private int getBenefitBy(Event event) {
         if (event == Discount.CHRISTMAS_D_DAY) {
-            return getChristmasDDayDiscount();
+            return benefits.getChristmasDDayDiscount(order, visitingDate);
         }
         if (event == Discount.WEEKDAY) {
-            return getWeekdayDiscount();
+            return benefits.getWeekdayDiscount(order, visitingDate);
         }
         if (event == Discount.WEEKEND) {
-            return getWeekendDiscount();
+            return benefits.getWeekendDiscount(order, visitingDate);
         }
         if (event == Discount.SPECIAL) {
-            return getSpecialDiscount();
+            return benefits.getSpecialDiscount(order, visitingDate);
         }
-        return getGiftBenefit();
-    }
-
-    private int getChristmasDDayDiscount() {
-        int discount = NOTHING;
-        if (order.isEventTarget() && visitingDate.isChristmasDDay()) {
-            int additionalCount = visitingDate.getDifferenceFromFirstDay();
-            discount = Discount.CHRISTMAS_D_DAY.getBenefit(additionalCount);
-        }
-        return discount;
-    }
-
-    private int getWeekdayDiscount() {
-        int discount = NOTHING;
-        if (order.isEventTarget() && visitingDate.isWeekday()) {
-            int additionalCount = order.getDessertCount();
-            discount = Discount.WEEKDAY.getBenefit(additionalCount);
-        }
-        return discount;
-    }
-
-    private int getWeekendDiscount() {
-        int discount = NOTHING;
-        if (order.isEventTarget() && visitingDate.isWeekend()) {
-            int additionalCount = order.getMainDishCount();
-            discount = Discount.WEEKDAY.getBenefit(additionalCount);
-        }
-        return discount;
-    }
-
-    private int getSpecialDiscount() {
-        int discount = NOTHING;
-        if (order.isEventTarget() && visitingDate.isSpecialDay()) {
-            discount = Discount.SPECIAL.getBenefit(NOTHING);
-        }
-        return discount;
-    }
-
-    private int getGiftBenefit() {
-        int benefit = NOTHING;
-        if (getGift().contains(GIFT.getName())) {
-            Gift gift = Gift.getBy(GIFT.getName());
-            benefit = gift.getBenefit(GIFT_COUNT);
-        }
-        return benefit;
+        return benefits.getGiftBenefit(order);
     }
 
     private void validateFormat(String userInput) {

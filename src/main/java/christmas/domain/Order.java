@@ -64,6 +64,21 @@ public class Order {
         }
         return count;
     }
+    
+    private void setDishes(List<String> dishNames, List<Integer> dishCounts) {
+        for (int i = NOTHING; i < dishNames.size(); i++) {
+            dishes.put(new Dish(dishNames.get(i)), dishCounts.get(i));
+        }
+    }
+
+    private int setTotalPrice() {
+        int totalPrice = NOTHING;
+        for (Dish dish : dishes.keySet()) {
+            int dishCount = dishes.get(dish);
+            totalPrice += dish.getPrice() * dishCount;
+        }
+        return totalPrice;
+    }
 
     private void validate(List<String> dishNames, List<Integer> dishCounts) {
         validateNames(dishNames);
@@ -92,20 +107,5 @@ public class Order {
             totalCounts += dishCount;
         }
         ArgumentValidator.isNotGreaterThan(totalCounts, MAX_COUNT);
-    }
-
-    private void setDishes(List<String> dishNames, List<Integer> dishCounts) {
-        for (int i = NOTHING; i < dishNames.size(); i++) {
-            dishes.put(new Dish(dishNames.get(i)), dishCounts.get(i));
-        }
-    }
-
-    private int setTotalPrice() {
-        int totalPrice = NOTHING;
-        for (Dish dish : dishes.keySet()) {
-            int dishCount = dishes.get(dish);
-            totalPrice += dish.getPrice() * dishCount;
-        }
-        return totalPrice;
     }
 }

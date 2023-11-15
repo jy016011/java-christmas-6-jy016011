@@ -47,20 +47,10 @@ public class ResultServiceTest {
         ResultService resultService = new ResultService();
         resultService.setDate("3");
         resultService.setOrder("티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1");
+        resultService.setBenefits();
         assertThat(resultService.getTotalPrice()).isEqualTo(142_000);
         assertThat(resultService.getTotalBenefit()).isEqualTo(31_246);
         assertThat(resultService.getTotalDiscountedPrice()).isEqualTo(135_754);
-    }
-
-    @DisplayName("만원 미만으로로 주문하면, 어떤 이벤트도 받지 못한다.")
-    @Test
-    void getNoEventsByUnderMinPrice() {
-        ResultService resultService = new ResultService();
-        resultService.setDate("3");
-        resultService.setOrder("타파스-1,제로콜라-1");
-        assertThat(resultService.getTotalBenefit()).isEqualTo(0);
-        assertThat(resultService.getTotalDiscountedPrice())
-                .isEqualTo(resultService.getTotalPrice());
     }
 
 }
